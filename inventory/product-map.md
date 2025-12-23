@@ -1,38 +1,48 @@
-# Product Map
+# 🗺️ Product Map
 
-## Overview
+> "A bird's eye view of the entire application."
 
-High-level overview of all modules, pages, and major components in the current product.
+## 1. Site Map (Navigation Structure)
 
-## Modules
+### 🏠 Home / Dashboard
+-   **Overview Widget**: Summary of key metrics.
+-   **Recent Activity**: List of latest actions.
+-   **Quick Actions**: "Create New Project", "Invite Member".
 
-### Module 1: [Name]
+### 📂 Projects
+-   **Project List**: Table view of all projects.
+-   **Project Detail**:
+    -   **Kanban View**: Drag-and-drop tasks.
+    -   **List View**: Sortable table.
+    -   **Settings**: Rename, Archive, Delete.
 
-**Description:**  
-**Pages:**  
-- Page 1
-- Page 2
+### ⚙️ Settings
+-   **Profile**: Change password, update avatar.
+-   **Billing**: View invoices, update credit card.
+-   **Team**: Manage members and permissions.
 
-**Key Features:**  
+---
 
-### Module 2: [Name]
+## 2. User Flows
 
-**Description:**  
-**Pages:**  
-- Page 1
-- Page 2
+### 🟢 Onboarding Flow
+1.  **Landing Page** -> Click "Sign Up".
+2.  **Signup Form** -> Enter Email/Password.
+3.  **Email Verification** -> Click link in email.
+4.  **Setup Wizard** -> Name Workspace -> Invite Team -> Done.
 
-**Key Features:**  
+### 🔵 Create Project Flow
+1.  **Dashboard** -> Click "New Project".
+2.  **Modal** -> Enter Project Name -> Select Template.
+3.  **Project View** -> Empty state shown.
 
-## User Flows
+---
 
-### Flow 1: [Name]
+## 3. Module Ownership
+*Who owns what?*
 
-**Steps:**  
-1. Step 1
-2. Step 2
-3. Step 3
-
-## Navigation Structure
-
-## Notes
+| Module | Product Owner | Tech Lead |
+| :--- | :--- | :--- |
+| **Auth & Onboarding** | [Name] | [Name] |
+| **Core Experience (Projects)** | [Name] | [Name] |
+| **Billing & Settings** | [Name] | [Name] |

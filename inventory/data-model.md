@@ -1,44 +1,55 @@
-# Data Model
+# 🗄️ Data Model
 
-## Overview
+> "How our entities relate to each other."
 
-Documentation of how key entities are structured in the current system.
+## 1. Entity Relationship Diagram (ERD)
 
-## Entities
+```mermaid
+erDiagram
+    User ||--o{ Membership : has
+    Workspace ||--o{ Membership : contains
+    Workspace ||--o{ Project : owns
+    Project ||--o{ Task : contains
+    Task ||--o{ Comment : has
+    User ||--o{ Comment : writes
 
-### Entity 1: User
+    User {
+        string id PK
+        string email
+        string password_hash
+        datetime created_at
+    }
 
-**Description:**  
-**Attributes:**  
-- `id` (string): Unique identifier
-- `name` (string): User's full name
-- `email` (string): Email address
-- `created_at` (timestamp): Account creation date
+    Workspace {
+        string id PK
+        string name
+        string plan_type "free, pro, enterprise"
+    }
 
-**Relationships:**  
-- Has many: Orders
-- Belongs to: Organization
-
-### Entity 2: Order
-
-**Description:**  
-**Attributes:**  
-- `id` (string): Unique identifier
-- `user_id` (string): Reference to User
-- `status` (enum): Order status
-- `total` (number): Total amount
-- `created_at` (timestamp): Order creation date
-
-**Relationships:**  
-- Belongs to: User
-- Has many: OrderItems
-
-## Entity Relationships
-
-```
-User ─── Orders ─── OrderItems
-  │
-  └─── Organization
+    Membership {
+        string user_id FK
+        string workspace_id FK
+        string role "owner, member, viewer"
+    }
 ```
 
-## Notes
+## 2. Key Entities
+
+### 👤 User
+-   **Source of Truth**: `users` table.
+-   **Key Constraints**: Email must be unique.
+
+### 🏢 Workspace
+-   **Source of Truth**: `workspaces` table.
+-   **Key Constraints**: `plan_type` defaults to "free".
+
+### 📋 Task
+-   **Source of Truth**: `tasks` table.
+-   **Key Constraints**: `status` enum (`todo`, `in_progress`, `done`).
+
+---
+
+## 3. Data Lifecycle
+
+-   **Retention**: Deleted tasks are "soft deleted" (kept for 30 days) before permanent removal.
+-   **Archival**: Projects inactive for > 1 year are moved to cold storage.

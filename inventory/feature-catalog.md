@@ -1,37 +1,46 @@
-# Feature Catalog
+# 📚 Feature Catalog
 
-## Overview
+> "The encyclopedia of 'How it works today'."
 
-Comprehensive list of current features and their business logic.
+## 1. Authentication Module
 
-## Features
+### 🔐 Login
+-   **Description**: Allows users to access their account.
+-   **Logic**:
+    -   Supports Email/Password and Google OAuth.
+    -   Locks account after 5 failed attempts (30 min cooldown).
+    -   Session timeout: 7 days.
 
-### Feature 1: [Name]
+### 🔑 Password Reset
+-   **Description**: Self-serve password recovery.
+-   **Logic**:
+    -   Sends a magic link (valid for 1 hour).
+    -   Link is one-time use only.
 
-**Module:**  
-**Description:**  
-**Business Logic:**  
-**User Roles:**  
-**Status:**  
-**Dependencies:**  
+---
 
-### Feature 2: [Name]
+## 2. Billing Module
 
-**Module:**  
-**Description:**  
-**Business Logic:**  
-**User Roles:**  
-**Status:**  
-**Dependencies:**  
+### 💳 Subscription Management
+-   **Description**: Upgrade/Downgrade plans.
+-   **Logic**:
+    -   **Proration**: Upgrades are charged immediately (prorated). Downgrades take effect at the end of the cycle.
+    -   **Failed Payments**: Retry 3 times over 7 days, then lock account.
 
-## Feature Categories
+---
 
-### Category 1: [Name]
-- Feature A
-- Feature B
+## 3. Core Features
 
-### Category 2: [Name]
-- Feature C
-- Feature D
+### 📝 Task Management
+-   **Description**: Create, edit, and move tasks.
+-   **Logic**:
+    -   Task Title: Max 140 chars.
+    -   Description: Markdown supported.
+    -   Assignee: Must be a member of the workspace.
+    -   Due Date: Cannot be in the past.
 
-## Notes
+### 🔔 Notifications
+-   **Description**: In-app and email alerts.
+-   **Logic**:
+    -   Triggered when: Assigned to a task, Mentioned in a comment.
+    -   Batching: Email notifications are batched every 15 mins to prevent spam.

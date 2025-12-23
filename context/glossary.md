@@ -1,23 +1,34 @@
-# Glossary
+# 📖 Product Glossary
 
-## Overview
+> "Naming things is hard. Let's agree on what we call them."
 
-This document defines key terms, concepts, and abbreviations used across product documentation.
+## 1. Core Entities
 
-## Terms
+| Term | Definition | Synonyms |
+| :--- | :--- | :--- |
+| **Workspace** | The top-level container for a customer's data. A customer can have multiple workspaces. | Organization, Tenant, Account |
+| **Member** | A user who has been invited to a Workspace. | User, Seat |
+| **Project** | A sub-folder within a Workspace to organize tasks. | Board, Folder |
 
-**Term 1:**  
-Definition
+## 2. Business Logic Terms
 
-**Term 2:**  
-Definition
+| Term | Definition |
+| :--- | :--- |
+| **Active User** | A user who has logged in and performed at least one "Key Action" in the last 30 days. |
+| **Churn** | A customer who has cancelled their subscription or failed to renew. |
+| **MRR** | Monthly Recurring Revenue. |
 
-## Abbreviations
+## 3. Acronyms
 
-**ABC:**  
-Definition
+| Acronym | Meaning |
+| :--- | :--- |
+| **ACL** | Access Control List (Permissions system). |
+| **CTA** | Call to Action (Button). |
+| **MVP** | Minimum Viable Product. |
+| **P0/P1/P2** | Priority levels (P0 = Critical blocker, P1 = High, P2 = Nice to have). |
 
-## Concepts
+## 4. Deprecated Terms
+*Do NOT use these terms anymore.*
 
-**Concept 1:**  
-Explanation
+-   ~~"Master Account"~~ -> Use **"Owner"** instead.
+-   ~~"Whitelist"~~ -> Use **"Allowlist"** instead.
