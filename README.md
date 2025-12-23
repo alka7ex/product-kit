@@ -18,7 +18,7 @@ Traditional PRDs often live in silos (Notion, Word, Jira) and quickly become out
 product-kit/
 ├── constitution.md          # The "Rules of the Game." Global principles & guardrails.
 ├── templates/               # Standardized schemas for BRDs, PRDs, and Epics.
-├── context/                 # External knowledge: Personas, Market Research, Glossary.
+├── context/                 # External knowledge: Product Vision, Personas, Market Research.
 ├── inventory/               # The "As-Is" State: Mapping existing features and constraints.
 ├── inbox/                   # Raw input: Meeting notes, transcripts, and rough ideas.
 └── specs/                   # The Final Output: AI-generated, human-verified PRDs & Epics.
@@ -53,7 +53,7 @@ For existing products, the AI needs to know what is already built.
 
 | Component  | Purpose |
 |------------|---------|
-| **Context** | Tells the AI who we are building for (Personas) and what the market looks like. |
+| **Context** | Tells the AI **why** we are building (Vision), **who** for (Personas), and the market landscape. |
 | **Templates** | Ensures every PRD has the same high-quality structure (User Stories, Acceptance Criteria, Edge Cases). |
 | **Inventory** | Prevents "hallucinating" features that break existing legacy logic or technical constraints. |
 

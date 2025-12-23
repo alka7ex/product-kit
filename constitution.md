@@ -3,7 +3,13 @@
 > "The code is the law, but this document is the spirit."
 
 ## 🎯 Purpose
-This document serves as the **single source of truth** for our product principles, non-negotiable standards, and decision-making frameworks. It is used by the AI to "lint" new requirements and ensure consistency across all PRDs and Epics.
+This document serves as the **single source of truth** for our product principles, non-negotiable standards, and decision-making frameworks.
+
+It works in tandem with **`context/product-vision.md`**:
+- **Product Vision**: Defines **WHAT** we are building (Strategy & Objectives).
+- **Constitution**: Defines **HOW** we build it (Quality, Standards, & Principles).
+
+It is used by the AI to "lint" new requirements and ensure consistency across all PRDs and Epics.
 
 ---
 
@@ -25,6 +31,37 @@ This document serves as the **single source of truth** for our product principle
 -   **Mobile Responsiveness**: All views must be fully functional on mobile devices (320px width min).
 -   **Error States**: Every input field and API interaction must have a defined error state.
 -   **Empty States**: Every list or dashboard must have a designed "zero data" state.
+
+### Design & Content Standards
+-   **Copywriting Style**:
+    -   **Voice**: Professional, human, and concise. Avoid robot-speak (e.g., use "We couldn't find that" instead of "404 Error: Object not found").
+    -   **Action-Oriented**: Use active verbs for buttons (e.g., "Save Profile" vs "Submit").
+-   **Color Semantics**:
+    -   **Primary**: Key actions (Submit, Continue).
+    -   **Destructive**: Irreversible actions (Delete, Cancel).
+    -   **Neutral**: Secondary actions, borders, backgrounds.
+-   **UI Representation (ASCII)**:
+    -   To keep specs version-controllable and focused on *structure* over *pixels*, use **Text-based UI (ASCII)** for wireframes.
+
+    *Example:*
+    ```text
+    __________________________________________________________
+    |                                                        |
+    |  [🏠] Home    [👤] Profile    [⚙️] Settings    [🔍] ____ |
+    |________________________________________________________|
+    |                                                        |
+    |  Account Information                                   |
+    |  -------------------                                   |
+    |                                                        |
+    |  Username:   |____________________________|            |
+    |                                                        |
+    |  Password:   |****************************|            |
+    |                                                        |
+    |  Role:       [ Editor            v ]                   |
+    |                                                        |
+    |              [  CANCEL  ]    [** SAVE **]              |
+    |________________________________________________________|
+    ```
 
 ### Technical Standards
 -   **Offline Mode**: Critical user flows (e.g., viewing saved data) must work without an internet connection.
