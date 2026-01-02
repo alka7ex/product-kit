@@ -9,6 +9,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Confirm, Prompt
 from rich.tree import Tree
+from rich.align import Align
 from rich import box
 
 from .scaffolder import scaffold_project
@@ -21,12 +22,12 @@ app = typer.Typer(
 console = Console()
 
 BANNER = """
- ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗    ██╗  ██╗██╗████████╗
- ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝    ██║ ██╔╝██║╚══██╔══╝
- ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║       █████╔╝ ██║   ██║   
- ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║       ██╔═██╗ ██║   ██║   
- ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║       ██║  ██╗██║   ██║   
- ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝       ╚═╝  ╚═╝╚═╝   ╚═╝   
+██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗    ██╗  ██╗██╗████████╗
+██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝    ██║ ██╔╝██║╚══██╔══╝
+██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║       █████╔╝ ██║   ██║   
+██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║       ██╔═██╗ ██║   ██║   
+██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║       ██║  ██╗██║   ██║   
+╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝       ╚═╝  ╚═╝╚═╝   ╚═╝   
 """
 
 
@@ -58,9 +59,8 @@ def main(
     """
     # Display banner
     console.print()
-    console.print(f"[bold cyan]{BANNER}[/bold cyan]", justify="center")
-    console.print()
-    console.print("[bold cyan]Requirement-Driven Design Framework[/bold cyan]", justify="center")
+    console.print(Align.center(BANNER, style="bold cyan"))
+    console.print("Requirement-Driven Design Framework", style="bold cyan", justify="center")
     console.print()
 
     # Determine target directory

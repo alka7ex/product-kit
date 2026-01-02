@@ -6,33 +6,32 @@ CLI to scaffold a new Product Kit project for requirement-driven design.
 
 ## Installation
 
-### Using UV (Recommended)
+### Quick Start (Recommended)
+
+We recommend using [UV](https://docs.astral.sh/uv/) - a fast Python package installer:
 
 ```bash
-# Install globally
-uv tool install create-product-kit
+# Install UV first (if you don't have it)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install product-kit
+uv tool install product-kit
 
 # Use it
-create-product-kit my-product
+prod my-project
 ```
 
-### Using pipx
+### Alternative: Using pipx
 
 ```bash
-# Install globally
-pipx install create-product-kit
-
-# Use it
-create-product-kit my-product
+pipx install product-kit
+prod my-project
 ```
 
-### Using pip
+### Alternative: Using pip
 
 ```bash
-# Install globally
-uv tool install product-kituct-kit
-
-# Use it
+pip install product-kit
 prod my-project
 ```
 
