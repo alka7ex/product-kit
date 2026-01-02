@@ -4,7 +4,60 @@ AI-powered agents for creating product requirements following Product Kit method
 
 ## Available Agents
 
-### 📋 `/productkit.clarify`
+### � `/productkit.constitution`
+**Purpose**: Create a comprehensive constitution.md with principles, standards, and decision frameworks
+
+**Use When**:
+- Setting up Product Kit for the first time
+- Defining product principles and values
+- Establishing non-negotiable quality standards
+- Creating decision-making frameworks
+
+**Context Files Used**: None (creates foundational document)
+
+**Handoffs**: → Update context/inventory, then start requirements
+
+---
+
+### 🔄 `/productkit.update-context`
+**Purpose**: Add or update context files (glossary, market research, personas, product vision)
+
+**Use When**:
+- Adding new terminology to glossary
+- Documenting market research findings
+- Creating or updating user personas
+- Refining product vision and strategy
+
+**Files Updated**:
+- `context/glossary.md`
+- `context/market-research.md`
+- `context/personas.md`
+- `context/product-vision.md`
+
+**Handoffs**: → Update inventory, then create requirements
+
+---
+
+### 📦 `/productkit.update-inventory`
+**Purpose**: Add or update inventory files (data model, feature catalog, product map, tech constraints)
+
+**Use When**:
+- Adding database entities or schema changes
+- Documenting new features or deprecating old ones
+- Updating navigation structure
+- Recording technical constraints or limitations
+
+**Files Updated**:
+- `inventory/data-model.md`
+- `inventory/feature-catalog.md`
+- `inventory/product-map.md`
+- `inventory/tech-constraints.md`
+
+**Handoffs**: → Create requirements with updated inventory
+
+---
+
+### �📋 `/productkit.clarify`
 **Purpose**: Ask clarifying questions before creating formal documents
 
 **Use When**:
@@ -96,6 +149,15 @@ AI-powered agents for creating product requirements following Product Kit method
 
 ## Workflow Patterns
 
+### Pattern 0: Initial Setup
+```
+User: Setting up Product Kit
+→ /productkit.constitution (create constitution.md)
+→ /productkit.update-context (add vision, personas, glossary)
+→ /productkit.update-inventory (add constraints, features)
+→ Ready to create requirements!
+```
+
 ### Pattern 1: Start with Clarification
 ```
 User: "We need better analytics"
@@ -126,6 +188,14 @@ User: "Planning Q2 product overhaul"
 User: "Quick feature, team aligned"
 → /productkit.prd (full specification)
 → Engineering starts immediately
+```
+
+### Pattern 5: Keeping Context Fresh
+```
+User: "New competitor launched" or "User research complete"
+→ /productkit.update-context (add market research, update personas)
+→ /productkit.update-inventory (add new constraints or features)
+→ Continue with requirements
 ```
 
 ---
@@ -191,8 +261,24 @@ All agents enforce these standards from `constitution.md`:
 
 ## Getting Started
 
-1. **First time**: Run `/productkit.clarify` with your feature idea
-2. **With context**: Use `/productkit.brd` for business case or `/productkit.prd` for specs
-3. **Large project**: Start with `/productkit.epic` to plan phases
+### First Time Setup
+1. **Create Foundation**: Run `/productkit.constitution` to establish principles and standards
+2. **Add Context**: Use `/productkit.update-context` to add vision, personas, and terminology
+3. **Document Inventory**: Use `/productkit.update-inventory` to record features, constraints, and data model
+4. **Start Building**: Run `/productkit.clarify` with your first feature idea
+
+### Regular Usage
+1. **Keep Context Current**: Regularly update context/inventory with `/productkit.update-context` and `/productkit.update-inventory`
+2. **Create Requirements**: Use `/productkit.clarify`, `/productkit.brd`, `/productkit.prd`, or `/productkit.epic`
+3. **Validate**: All documents automatically checked against constitution and inventory
+
+### Quick Commands Reference
+- `/productkit.constitution` - Create constitution.md
+- `/productkit.update-context` - Update glossary, personas, vision, market research
+- `/productkit.update-inventory` - Update features, constraints, data model, product map
+- `/productkit.clarify` - Ask clarifying questions for requirements
+- `/productkit.brd` - Create Business Requirements Document
+- `/productkit.prd` - Create Product Requirements Document  
+- `/productkit.epic` - Create Epic for large initiatives
 
 See [Quick Start Guide](../../QUICKSTART.md) for detailed walkthrough.
