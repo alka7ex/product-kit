@@ -4,6 +4,43 @@ Product Kit is a framework for **Requirement-Driven Design (RDD)**. Heavily insp
 
 The goal of Product Kit is to **treat product requirements like code**: structured, version-controlled, and AI-executable.
 
+## ⚡ Quick Start
+
+### Installation
+
+Install Product Kit CLI using [UV](https://docs.astral.sh/uv/) (recommended):
+
+```bash
+# Install UV (if you don't have it)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install Product Kit
+uv tool install product-kit
+
+# Create a new project
+prod my-product
+```
+
+You'll be guided through an interactive setup to configure:
+- Product name and vision
+- AI assistant choice (Copilot, Claude, or Gemini)
+- Strategic pillars and personas
+- Template preferences
+
+### Alternative Installation Methods
+
+**Using pipx:**
+```bash
+pipx install product-kit
+prod my-product
+```
+
+**Using pip:**
+```bash
+pip install product-kit
+prod my-product
+```
+
 ## 🚀 Why Product Kit?
 
 Traditional PRDs often live in silos (Notion, Word, Jira) and quickly become outdated. Product Kit moves the source of truth into your repository, allowing AI to:
@@ -28,13 +65,13 @@ product-kit/
 │   │   └── README.md        # Index of all available context files
 │   └── templates/           # References to document templates
 │       └── README.md        # Index of all available templates
-├── .github/                 # GitHub integrations
-│   └── copilot/             # GitHub Agents
+├── .github/                 # GitHub integrations  
+│   └── agents/              # AI agents (speckit format)
 │       ├── README.md        # Agent documentation and usage
-│       ├── productkit.clarify.md    # Ask clarifying questions
-│       ├── productkit.brd.md        # Create Business Requirements Document
-│       ├── productkit.prd.md        # Create Product Requirements Document
-│       └── productkit.epic.md       # Create Epic planning document
+│       ├── productkit.clarify.agent.md    # Ask clarifying questions
+│       ├── productkit.brd.agent.md        # Create Business Requirements Document
+│       ├── productkit.prd.agent.md        # Create Product Requirements Document
+│       └── productkit.epic.agent.md       # Create Epic planning document
 ├── context/                 # External knowledge: Product Vision, Personas, Market Research, Glossary.
 │   ├── glossary.md          # Terminology and definitions.
 │   ├── market_research.md   # Market analysis and competitive landscape.
@@ -53,13 +90,13 @@ product-kit/
 
 ## 🛠 The Workflow
 
-### Method 1: AI-Assisted with GitHub Copilot (Recommended)
+### Method 1: AI-Assisted (Recommended)
 
-Using GitHub Agents for structured, validated requirements:
+Using AI agents for structured, validated requirements:
 
 #### Step 1: Start with Clarification
 ```bash
-#productkit.clarify "Users want better analytics"
+/productkit.clarify "Users want better analytics"
 ```
 - AI loads all context (constitution, vision, personas, inventory)
 - Asks intelligent questions to gather complete requirements
@@ -71,7 +108,7 @@ Based on your needs:
 
 **For Business Stakeholders:**
 ```bash
-#productkit.brd
+/productkit.brd
 ```
 - Creates Business Requirements Document
 - Includes ROI, strategic alignment, go-to-market
@@ -79,7 +116,7 @@ Based on your needs:
 
 **For Engineering Teams:**
 ```bash
-#productkit.prd
+/productkit.prd
 ```
 - Creates Product Requirements Document
 - Detailed specs, user stories, acceptance criteria
@@ -87,7 +124,7 @@ Based on your needs:
 
 **For Large Initiatives:**
 ```bash
-#productkit.epic
+/productkit.epic
 ```
 - Creates Epic planning document
 - Multi-phase breakdown with success metrics
@@ -125,19 +162,19 @@ For existing products, Copilot needs to know what is already built.
 ### 3. The Discovery Loop
 
 1. **Preparation**: Use `/context` and `/inventory` as your knowledge base. Update `glossary.md` with new terminology.
-2. **Clarification**: Use Agents (e.g., `/productkit.clarify`) to analyze requirements against your Context and Inventory. Copilot will ask questions to fill gaps.
+2. **Clarification**: Use AI instructions (e.g., `/productkit.clarify`) to analyze requirements against your Context and Inventory. AI will ask questions to fill gaps.
 3. **Generation**: Copilot uses the `/templates` to generate structured BRDs, PRDs, or Epics with automatic validation.
 4. **Iteration**: Refine the generated documents by cross-referencing with the constitution and existing inventory.
 
 ---
 
-## 🤖 GitHub Copilot Instructions Reference
+## 🤖 AI Instructions Reference
 
-Product Kit includes GitHub Agents that automatically load context and validate requirements:
+Product Kit includes AI instructions that work with GitHub Copilot, Claude, Gemini, and other AI assistants. These instructions automatically load context and validate requirements:
 
 ### Available Instructions
 
-| Agent | Purpose | Key Files Used |
+| Instruction | Purpose | Key Files Used |
 |---------|---------|----------------|
 | `/productkit.clarify` | Ask clarifying questions before creating docs | All context + inventory |
 | `/productkit.brd` | Create Business Requirements Document | Constitution, Vision, Personas, Market Research |
@@ -163,10 +200,10 @@ Product Kit includes GitHub Agents that automatically load context and validate 
 3. **Smart Next Steps**: Instructions suggest what to do next:
    ```yaml
    next_steps:
-     - "Generate detailed PRD: Use #productkit.prd with this BRD as context"
+     - "Generate detailed PRD: Use /productkit.prd with this BRD as context"
    ```
 
-See [`.github/agents/README.md`](.github/agents/README.md) for detailed instruction documentation.
+See [`.github/copilot/README.md`](.github/copilot/README.md) for detailed instruction documentation.
 
 ## 🧩 Key Components
 

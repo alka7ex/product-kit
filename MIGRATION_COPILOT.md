@@ -1,18 +1,18 @@
 ## Migration to GitHub Copilot
 
-Product Kit has been updated to work with **GitHub Copilot** instead of Claude AI.
+Product Kit has been updated to work with **GitHub Copilot** following the **speckit methodology**.
 
 ## What Changed
 
 ### 1. Directory Structure
 - **Before**: `.claude/commands/` directory
-- **After**: `.github/agents/` directory
-- All agent files moved to follow GitHub's conventions
+- **After**: `.github/agents/` directory (following speckit format)
+- All agent files now use `.agent.md` suffix
 
 ### 2. Command Syntax
 - **Consistent**: `/productkit.clarify`, `/productkit.brd`, `/productkit.prd`, `/productkit.epic`
-- Uses `/` prefix (slash commands) like speckit and GitHub Copilot conventions
-- Same syntax for both Claude and GitHub Copilot
+- Uses `/` prefix (slash commands) like speckit
+- Works with GitHub Copilot Chat, Claude, and other AI assistants
 
 ### 3. File Format
 **Before** (Claude handoffs):
@@ -39,9 +39,10 @@ next_steps:
 
 ### 4. Terminology Updates
 Throughout the documentation:
-- "Claude AI" → "GitHub Copilot"
-- "slash commands" remain `/command` (consistent with speckit)
-- "AI agent" → "Copilot"
+- "Claude commands" → "AI agents"
+- "slash commands" use `/` prefix (speckit standard)
+- `.md` → `.agent.md` for agent files
+- Directory follows speckit: `.github/agents/`
 
 ## Files Updated
 
@@ -50,12 +51,12 @@ Throughout the documentation:
 - ✅ `ARCHITECTURE.md` - Updated all diagrams and explanations
 - ✅ `QUICKSTART.md` - Updated commands and prerequisites
 
-### Agent Files
-- ✅ `.github/agents/README.md` - Updated command reference
-- ✅ `.github/agents/productkit.brd.md` - Updated YAML frontmatter
-- ✅ `.github/agents/productkit.prd.md` - Updated YAML frontmatter
-- ✅ `.github/agents/productkit.epic.md` - Updated YAML frontmatter
-- ✅ `.github/agents/productkit.clarify.md` - Updated YAML frontmatter
+### Agent Files (Speckit Format)
+- ✅ `.github/agents/README.md` - Agent documentation
+- ✅ `.github/agents/productkit.brd.agent.md` - BRD creation agent
+- ✅ `.github/agents/productkit.prd.agent.md` - PRD creation agent
+- ✅ `.github/agents/productkit.epic.agent.md` - Epic planning agent
+- ✅ `.github/agents/productkit.clarify.agent.md` - Requirements clarification agent
 
 ### Context References
 - ✅ `.specify/memory/README.md` - Updated AI agent references
@@ -63,21 +64,27 @@ Throughout the documentation:
 
 ## How to Use
 
-### With GitHub Copilot Chat
-1. Open GitHub Copilot Chat in VS Code
-2. Reference instructions using `/` syntax (slash commands):
-   ```
-   /productkit.clarify "Users want better reporting"
-   ```
+### With AI Chat (GitHub Copilot, Claude, etc.)
 
-### With GitHub Copilot Workspace
-1. Copilot automatically discovers instructions in `.github/agents/`
-2. Instructions appear as suggestions when working on requirements
-3. Use `/productkit.*` to explicitly invoke (slash command format)
+Use slash commands with `/productkit.*` prefix:
 
-### Agent Reference
+```bash
+/productkit.clarify "Users want better reporting"
+/productkit.brd
+/productkit.prd
+/productkit.epic
+```
 
-| Agent | Purpose | When to Use |
+The AI will:
+1. Read the agent file from `.github/agents/`
+2. Load all referenced context files
+3. Follow the agent's outline and validation steps
+4. Generate the document using templates
+5. Suggest handoffs to related agents
+
+### Instruction Reference
+
+| Instruction | Purpose | When to Use |
 |------------|---------|-------------|
 | `/productkit.clarify` | Ask clarifying questions | Starting with vague requirements |
 | `/productkit.brd` | Create Business Requirements | Need executive buy-in, ROI analysis |
@@ -98,7 +105,7 @@ Throughout the documentation:
 If you have existing Product Kit setup:
 
 - [ ] Pull latest changes: `git pull origin main`
-- [ ] Verify `.github/agents/` directory exists
+- [ ] Verify `.github/copilot/` directory exists
 - [ ] Verify `.claude/` directory is removed
 - [ ] Update bookmarks/docs referencing old commands
 - [ ] Test instructions with `/productkit.clarify`
@@ -119,4 +126,4 @@ Note: While optimized for GitHub Copilot, the markdown instruction format is com
 See:
 - [Quick Start Guide](QUICKSTART.md) - Getting started
 - [Architecture Guide](ARCHITECTURE.md) - How it works
-- [Agent Reference](.github/agents/README.md) - Detailed documentation
+- [Instruction Reference](.github/copilot/README.md) - Detailed documentation
