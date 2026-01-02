@@ -94,6 +94,28 @@ product-kit/
 
 Using AI agents for structured, validated requirements:
 
+#### Step 0: First-Time Setup (If Needed)
+
+For new projects or missing foundational files:
+
+```bash
+# Create your product constitution
+/productkit.constitution
+```
+Defines principles, standards, and decision frameworks.
+
+```bash
+# Add context files (vision, personas, market research, glossary)
+/productkit.update-context
+```
+Provides background knowledge for AI-assisted requirements.
+
+```bash
+# Document current state (features, constraints, data model, navigation)
+/productkit.update-inventory
+```
+Tracks what exists so AI can validate against it.
+
 #### Step 1: Start with Clarification
 ```bash
 /productkit.clarify "Users want better analytics"
@@ -135,6 +157,20 @@ Based on your needs:
 - Flags any conflicts or missing requirements
 - Suggests next steps for related documents
 
+#### Ongoing: Keep Context Fresh
+
+As your product evolves:
+
+```bash
+# Update context when you have new research, personas, or strategy changes
+/productkit.update-context
+
+# Update inventory when features launch, constraints change, or data model evolves
+/productkit.update-inventory
+```
+
+This ensures AI always has current information for validation.
+
 ### Method 2: Manual Process
 
 For those who prefer working directly with templates:
@@ -174,6 +210,16 @@ Product Kit includes AI instructions that work with GitHub Copilot, Claude, Gemi
 
 ### Available Instructions
 
+#### Setup & Maintenance Commands
+
+| Instruction | Purpose | Files Created/Updated |
+|---------|---------|----------------|
+| `/productkit.constitution` | Create product constitution with principles & standards | `constitution.md` |
+| `/productkit.update-context` | Add/update context files (vision, personas, glossary, research) | `context/*.md` |
+| `/productkit.update-inventory` | Add/update inventory files (features, constraints, data, navigation) | `inventory/*.md` |
+
+#### Requirements Creation Commands
+
 | Instruction | Purpose | Key Files Used |
 |---------|---------|----------------|
 | `/productkit.clarify` | Ask clarifying questions before creating docs | All context + inventory |
@@ -203,7 +249,7 @@ Product Kit includes AI instructions that work with GitHub Copilot, Claude, Gemi
      - "Generate detailed PRD: Use /productkit.prd with this BRD as context"
    ```
 
-See [`.github/copilot/README.md`](.github/copilot/README.md) for detailed instruction documentation.
+See [`.github/agents/README.md`](.github/agents/README.md) for detailed instruction documentation and workflow patterns.
 
 ## 🧩 Key Components
 
