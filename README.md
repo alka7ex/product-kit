@@ -11,6 +11,11 @@ Traditional PRDs often live in silos (Notion, Word, Jira) and quickly become out
 - **Audit Logic**: Catch edge cases before they reach developers.
 - **Ensure Consistency**: Cross-reference new ideas against your "Product Constitution" and "Inventory."
 - **Automate Handoff**: Generate technical-ready specifications that feed directly into engineering workflows.
+- **Validate Requirements**: Automatically check against strategic pillars, user needs, and technical constraints.
+
+**👉 New to Product Kit? See the [Quick Start Guide](QUICKSTART.md)**  
+**📐 Want to understand how it works? See the [Architecture Guide](ARCHITECTURE.md)**  
+**🔄 Migrating from other AI tools? See the [Copilot Migration Guide](MIGRATION_COPILOT.md)**
 
 ## 📂 Repository Structure
 
@@ -18,6 +23,18 @@ Traditional PRDs often live in silos (Notion, Word, Jira) and quickly become out
 product-kit/
 ├── constitution.md          # The "Rules of the Game." Global principles & guardrails.
 ├── LICENSE                  # Repository license.
+├── .specify/                # AI-readable structure (speckit methodology)
+│   ├── memory/              # References to context files for AI awareness
+│   │   └── README.md        # Index of all available context files
+│   └── templates/           # References to document templates
+│       └── README.md        # Index of all available templates
+├── .github/                 # GitHub integrations
+│   └── copilot/             # GitHub Agents
+│       ├── README.md        # Agent documentation and usage
+│       ├── productkit.clarify.md    # Ask clarifying questions
+│       ├── productkit.brd.md        # Create Business Requirements Document
+│       ├── productkit.prd.md        # Create Product Requirements Document
+│       └── productkit.epic.md       # Create Epic planning document
 ├── context/                 # External knowledge: Product Vision, Personas, Market Research, Glossary.
 │   ├── glossary.md          # Terminology and definitions.
 │   ├── market_research.md   # Market analysis and competitive landscape.
@@ -36,17 +53,70 @@ product-kit/
 
 ## 🛠 The Workflow
 
+### Method 1: AI-Assisted with GitHub Copilot (Recommended)
+
+Using GitHub Agents for structured, validated requirements:
+
+#### Step 1: Start with Clarification
+```bash
+#productkit.clarify "Users want better analytics"
+```
+- AI loads all context (constitution, vision, personas, inventory)
+- Asks intelligent questions to gather complete requirements
+- Validates strategic alignment and technical feasibility
+- Suggests next steps
+
+#### Step 2: Create Appropriate Document
+Based on your needs:
+
+**For Business Stakeholders:**
+```bash
+#productkit.brd
+```
+- Creates Business Requirements Document
+- Includes ROI, strategic alignment, go-to-market
+- Automatically validates against constitution and product vision
+
+**For Engineering Teams:**
+```bash
+#productkit.prd
+```
+- Creates Product Requirements Document
+- Detailed specs, user stories, acceptance criteria
+- Checks against feature catalog and tech constraints
+
+**For Large Initiatives:**
+```bash
+#productkit.epic
+```
+- Creates Epic planning document
+- Multi-phase breakdown with success metrics
+- Validates against strategic pillars
+
+#### Step 3: Iterate and Refine
+- Copilot provides validation checklist
+- Flags any conflicts or missing requirements
+- Suggests next steps for related documents
+
+### Method 2: Manual Process
+
+For those who prefer working directly with templates:
+
+### Method 2: Manual Process
+
+For those who prefer working directly with templates:
+
 ### 1. The Constitution (`constitution.md`)
 
 Before writing requirements, define your non-negotiables.
 
 **Example**: "Every feature must support Offline Mode" or "Success metrics must be defined for every EPIC."
 
-**The AI's Role**: It acts as a "Linter," flagging any requirement that violates these principles.
+**Copilot's Role**: It acts as a "Linter," flagging any requirement that violates these principles.
 
 ### 2. The Inventory (`inventory/`)
 
-For existing products, the AI needs to know what is already built.
+For existing products, Copilot needs to know what is already built.
 
 - **Product Map**: Navigation and module hierarchy.
 - **Feature Catalog**: Current business logic and "how it works today."
@@ -55,18 +125,53 @@ For existing products, the AI needs to know what is already built.
 ### 3. The Discovery Loop
 
 1. **Preparation**: Use `/context` and `/inventory` as your knowledge base. Update `glossary.md` with new terminology.
-2. **Clarification**: Use an AI agent to analyze requirements against your Context and Inventory. The AI will ask questions to fill gaps.
-3. **Generation**: The AI uses the `/templates` to generate structured BRDs, PRDs, or Epics.
+2. **Clarification**: Use Agents (e.g., `/productkit.clarify`) to analyze requirements against your Context and Inventory. Copilot will ask questions to fill gaps.
+3. **Generation**: Copilot uses the `/templates` to generate structured BRDs, PRDs, or Epics with automatic validation.
 4. **Iteration**: Refine the generated documents by cross-referencing with the constitution and existing inventory.
+
+---
+
+## 🤖 GitHub Copilot Instructions Reference
+
+Product Kit includes GitHub Agents that automatically load context and validate requirements:
+
+### Available Instructions
+
+| Agent | Purpose | Key Files Used |
+|---------|---------|----------------|
+| `/productkit.clarify` | Ask clarifying questions before creating docs | All context + inventory |
+| `/productkit.brd` | Create Business Requirements Document | Constitution, Vision, Personas, Market Research |
+| `/productkit.prd` | Create Product Requirements Document | All files (full validation) |
+| `/productkit.epic` | Create Epic planning document | Vision (Strategic Pillars), Feature Catalog, Constraints |
+
+### How It Works
+
+1. **Context Awareness**: Instructions explicitly reference file locations
+   ```markdown
+   1. Load Constitution: Read `constitution.md`
+   2. Load Product Vision: Read `context/product-vision.md`
+   3. Check Constraints: Review `inventory/tech-constraints.md`
+   ```
+
+2. **Automatic Validation**: Every document is checked against:
+   - ✅ Constitution standards (UX/UI, Design, Technical, Process)
+   - ✅ Strategic alignment (Product Vision pillars)
+   - ✅ User needs (Personas goals)
+   - ✅ Technical feasibility (Tech Constraints)
+   - ✅ Feature conflicts (Feature Catalog)
+
+3. **Smart Next Steps**: Instructions suggest what to do next:
+   ```yaml
+   next_steps:
+     - "Generate detailed PRD: Use #productkit.prd with this BRD as context"
+   ```
+
+See [`.github/agents/README.md`](.github/agents/README.md) for detailed instruction documentation.
 
 ## 🧩 Key Components
 
 | Component  | Purpose |
 |------------|---------|
-| **Context** | Tells the AI **why** we are building (Vision), **who** for (Personas), the market landscape (Research), and shared terminology (Glossary). |
-| **Templates** | Ensures every PRD has the same high-quality structure (User Stories, Acceptance Criteria, Edge Cases). |
-| **Inventory** | Prevents "hallucinating" features that break existing logic or technical constraints. Includes data models, feature catalog, product map, and tech constraints. |
-
-## 🤝 Technical Handoff
+| **Context** | Tells Copilot **why** we are building (Vision), **who** for (Personas), the market landscape (Research), and shared terminology (Glossary). |
 
 Once a spec is finalized using the templates, it is ready to be consumed by developers using GitHub Spec-kit. By providing a structured Markdown PRD, you eliminate 90% of the back-and-forth during the planning phase.

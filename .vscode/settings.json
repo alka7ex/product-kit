@@ -1,0 +1,8 @@
+{
+    "chat.promptFilesRecommendations": {
+        "productkit.clarify": true,
+        "productkit.brd": true,
+        "productkit.prd": true,
+        "productkit.epic": true
+    }
+}
