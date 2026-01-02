@@ -67,11 +67,14 @@ product-kit/
 │       └── README.md        # Index of all available templates
 ├── .github/                 # GitHub integrations  
 │   └── agents/              # AI agents (speckit format)
-│       ├── README.md        # Agent documentation and usage
-│       ├── productkit.clarify.agent.md    # Ask clarifying questions
-│       ├── productkit.brd.agent.md        # Create Business Requirements Document
-│       ├── productkit.prd.agent.md        # Create Product Requirements Document
-│       └── productkit.epic.agent.md       # Create Epic planning document
+│       ├── README.md                           # Agent documentation and usage
+│       ├── productkit.constitution.agent.md    # Create product constitution
+│       ├── productkit.update-context.agent.md  # Update context files
+│       ├── productkit.update-inventory.agent.md # Update inventory files
+│       ├── productkit.clarify.agent.md         # Ask clarifying questions
+│       ├── productkit.brd.agent.md             # Create Business Requirements Document
+│       ├── productkit.prd.agent.md             # Create Product Requirements Document
+│       └── productkit.epic.agent.md            # Create Epic planning document
 ├── context/                 # External knowledge: Product Vision, Personas, Market Research, Glossary.
 │   ├── glossary.md          # Terminology and definitions.
 │   ├── market_research.md   # Market analysis and competitive landscape.
