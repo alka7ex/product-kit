@@ -22,9 +22,9 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     tree = Tree("├── [cyan]●[/cyan] Initialize directory structure")
     
     # Get the root directory of the product-kit project
-    # CLI is in product-kit/cli, so go up to get product-kit root
-    package_dir = Path(__file__).parent
-    root_dir = package_dir.parent.parent.parent.parent
+    # CLI is in product-kit/cli/src/product_kit, so go up 4 levels to get product-kit root
+    package_dir = Path(__file__).parent  # /product-kit/cli/src/product_kit
+    root_dir = package_dir.parent.parent.parent  # /product-kit
     
     # Verify we're in the right place
     if not (root_dir / "agents").exists():
@@ -63,6 +63,11 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     # Copy AI-specific agents
     step_agents = tree.add("[cyan]●[/cyan] Setup AI agent configurations")
     copy_ai_agents(root_dir, target_dir, config, step_agents)
+    console.print(tree)
+    
+    # Create editor-specific configuration
+    step_editor = tree.add("[cyan]●[/cyan] Setup editor configuration")
+    create_editor_config(target_dir, config)
     console.print(tree)
     
     # Create .gitignore
@@ -224,6 +229,33 @@ def copy_ai_agents(
             count += 1
     
     tree_node.label = f"[cyan]●[/cyan] Setup AI agent configurations ([green]{count} files[/green])"
+
+
+def create_editor_config(target_dir: Path, config: Dict[str, Any]) -> None:
+    """Create editor-specific configuration files."""
+    ai_assistant = config.get("ai_assistant", "copilot")
+    editor = config.get("editor", "vscode")
+    
+    # Create .vscode/settings.json for VS Code + GitHub Copilot
+    if ai_assistant == "copilot" and editor in ["vscode", "vscode-web"]:
+        vscode_dir = target_dir / ".vscode"
+        vscode_dir.mkdir(exist_ok=True)
+        
+        settings = {
+            "chat.promptFilesRecommendations": {
+                "productkit.clarify": True,
+                "productkit.brd": True,
+                "productkit.prd": True,
+                "productkit.epic": True,
+                "productkit.constitution": True,
+                "productkit.update-context": True,
+                "productkit.update-inventory": True
+            }
+        }
+        
+        import json
+        settings_file = vscode_dir / "settings.json"
+        settings_file.write_text(json.dumps(settings, indent=4))
 
 
 def create_gitignore(target_dir: Path, config: Dict[str, Any]) -> None:

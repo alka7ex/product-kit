@@ -1,6 +1,6 @@
 [project]
 name = "product-kit"
-version = "1.0.3"
+version = "1.0.6"
 description = "CLI to scaffold Product Kit framework for requirement-driven design"
 authors = [
     { name = "Haikal", email = "farhienzahaikal@gmail.com" }

@@ -103,6 +103,7 @@ def main(
             "persona_goal": "Complete tasks efficiently without context switching",
             "strategic_pillars": ["Growth & Acquisition", "Product Excellence", "Operational Efficiency"],
             "ai_assistant": "copilot",
+            "editor": "vscode",
             "include_copilot_agents": True,
             "include_examples": True,
         }
@@ -155,7 +156,10 @@ def main(
             f"  /productkit.clarify - Ask clarifying questions\n"
             f"  /productkit.brd - Create Business Requirements\n"
             f"  /productkit.prd - Create Product Requirements\n"
-            f"  /productkit.epic - Plan large initiatives",
+            f"  /productkit.epic - Plan large initiatives\n"
+            f"  /productkit.constitution - Review & update standards\n"
+            f"  /productkit.update-context - Update product context\n"
+            f"  /productkit.update-inventory - Update system inventory",
             title=f"🤖 {ai_name} Commands",
             box=box.ROUNDED,
         )
@@ -176,9 +180,9 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
     # AI Assistant choice
     console.print()
     console.print("[bold]Select AI Assistant:[/bold]")
-    console.print("  1. GitHub Copilot")
-    console.print("  2. Claude (Anthropic)")
-    console.print("  3. Gemini (Google)")
+    console.print("  1. GitHub Copilot (VS Code)")
+    console.print("  2. Claude (Claude.ai or Claude Desktop)")
+    console.print("  3. Gemini (AI Studio or CLI)")
     
     ai_choice = Prompt.ask(
         "Choose AI assistant",
@@ -192,7 +196,67 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
         "3": "gemini",
     }
     ai_assistant = ai_assistant_map[ai_choice]
-    console.print(f"[green]Selected AI assistant: {ai_assistant}[/green]")
+    
+    # Editor/Platform choice (for additional setup)
+    console.print()
+    if ai_assistant == "copilot":
+        console.print("[bold]Select Editor:[/bold]")
+        console.print("  1. VS Code")
+        console.print("  2. VS Code (web)")
+        console.print("  3. Other")
+        
+        editor_choice = Prompt.ask(
+            "Choose editor",
+            choices=["1", "2", "3"],
+            default="1",
+        )
+        
+        editor_map = {
+            "1": "vscode",
+            "2": "vscode-web",
+            "3": "other",
+        }
+        editor = editor_map[editor_choice]
+    elif ai_assistant == "claude":
+        console.print("[bold]Select Platform:[/bold]")
+        console.print("  1. Claude.ai (web)")
+        console.print("  2. Claude Desktop")
+        console.print("  3. Claude Code Editor")
+        
+        platform_choice = Prompt.ask(
+            "Choose platform",
+            choices=["1", "2", "3"],
+            default="1",
+        )
+        
+        platform_map = {
+            "1": "claude-web",
+            "2": "claude-desktop",
+            "3": "claude-code",
+        }
+        editor = platform_map[platform_choice]
+    elif ai_assistant == "gemini":
+        console.print("[bold]Select Platform:[/bold]")
+        console.print("  1. Google AI Studio (web)")
+        console.print("  2. Gemini API/CLI")
+        console.print("  3. IDE Extension")
+        
+        platform_choice = Prompt.ask(
+            "Choose platform",
+            choices=["1", "2", "3"],
+            default="1",
+        )
+        
+        platform_map = {
+            "1": "gemini-studio",
+            "2": "gemini-cli",
+            "3": "gemini-ide",
+        }
+        editor = platform_map[platform_choice]
+    else:
+        editor = "other"
+    
+    console.print(f"[green]Selected: {ai_assistant} on {editor}[/green]")
     console.print()
 
     product_vision = Prompt.ask(
@@ -234,6 +298,7 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
         "persona_goal": persona_goal,
         "strategic_pillars": strategic_pillars,
         "ai_assistant": ai_assistant,
+        "editor": editor,
         "include_copilot_agents": ai_assistant == "copilot",
         "include_examples": include_examples,
     }
