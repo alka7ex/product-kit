@@ -21,9 +21,10 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     # Create progress tree
     tree = Tree("├── [cyan]●[/cyan] Initialize directory structure")
     
-    # Get the template directory (relative to this file)
-    cli_dir = Path(__file__).parent.parent.parent
-    root_dir = cli_dir.parent
+    # Get the template directory from package data
+    # Data files are bundled in product_kit/data/
+    package_dir = Path(__file__).parent
+    root_dir = package_dir / "data"
     
     # Create directory structure
     target_dir.mkdir(parents=True, exist_ok=True)
@@ -48,7 +49,7 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     
     # Copy core files
     step = tree.add("[cyan]●[/cyan] Copy template files")
-    files_copied = copy_template_files(root_dir, target_dir, config, replacements, step)
+    files_copied = copy_template_files(root_dir, target_dir, config, replacements, step, console)
     console.print(tree)
     
     # Copy AI-specific agents
@@ -131,6 +132,7 @@ def copy_template_files(
     config: Dict[str, Any],
     replacements: Dict[str, str],
     tree_node: Tree,
+    console: Console,
 ) -> int:
     """Copy and render template files."""
     files_to_copy = [
@@ -146,10 +148,6 @@ def copy_template_files(
         ("templates/brd_template.md", "templates/brd_template.md"),
         ("templates/prd_template.md", "templates/prd_template.md"),
         ("templates/epic_template.md", "templates/epic_template.md"),
-        ("README.md", "README.md"),
-        ("QUICKSTART.md", "QUICKSTART.md"),
-        ("ARCHITECTURE.md", "ARCHITECTURE.md"),
-        ("LICENSE", "LICENSE"),
     ]
     
     ai_assistant = config.get("ai_assistant", "copilot")
@@ -189,15 +187,22 @@ def copy_ai_agents(
 ) -> None:
     """Copy AI-specific agent files."""
     ai_assistant = config.get("ai_assistant", "copilot")
-    agents_src = root_dir / "speckit" / ai_assistant
     
     count = 0
-    if agents_src.exists():
-        if ai_assistant == "copilot":
-            dest_dir = target_dir / ".github" / "agents"
-        else:
-            dest_dir = target_dir / f".{ai_assistant}"
-        
+    if ai_assistant == "copilot":
+        agents_src = root_dir / ".github" / "agents"
+        dest_dir = target_dir / ".github" / "agents"
+    elif ai_assistant == "claude":
+        agents_src = root_dir / ".claude"
+        dest_dir = target_dir / ".claude"
+    elif ai_assistant == "gemini":
+        agents_src = root_dir / ".gemini"
+        dest_dir = target_dir / ".gemini"
+    else:
+        agents_src = None
+        dest_dir = None
+    
+    if agents_src and agents_src.exists():
         dest_dir.mkdir(parents=True, exist_ok=True)
         
         for agent_file in agents_src.glob("*.md"):

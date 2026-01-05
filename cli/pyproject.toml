@@ -1,9 +1,9 @@
 [project]
 name = "product-kit"
-version = "1.0.1"
+version = "1.0.3"
 description = "CLI to scaffold Product Kit framework for requirement-driven design"
 authors = [
-    { name = "Your Name", email = "your.email@example.com" }
+    { name = "Haikal", email = "farhienzahaikal@gmail.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.8"
@@ -52,10 +52,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/product-kit"
-Documentation = "https://github.com/yourusername/product-kit#readme"
-Repository = "https://github.com/yourusername/product-kit"
-Issues = "https://github.com/yourusername/product-kit/issues"
+Homepage = "https://github.com/haikal/product-kit"
+Documentation = "https://github.com/haikal/product-kit#readme"
+Repository = "https://github.com/haikal/product-kit"
+Issues = "https://github.com/haikal/product-kit/issues"
 
 [build-system]
 requires = ["hatchling"]
