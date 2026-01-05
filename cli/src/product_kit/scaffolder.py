@@ -21,25 +21,33 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     # Create progress tree
     tree = Tree("├── [cyan]●[/cyan] Initialize directory structure")
     
-    # Get the template directory from package data
-    # Data files are bundled in product_kit/data/
+    # Get the root directory of the product-kit project
+    # CLI is in product-kit/cli, so go up to get product-kit root
     package_dir = Path(__file__).parent
-    root_dir = package_dir / "data"
+    root_dir = package_dir.parent.parent.parent.parent
+    
+    # Verify we're in the right place
+    if not (root_dir / "agents").exists():
+        raise FileNotFoundError(
+            f"Cannot find product-kit root directory. "
+            f"Expected agents/ folder at {root_dir}"
+        )
     
     # Create directory structure
     target_dir.mkdir(parents=True, exist_ok=True)
     (target_dir / "context").mkdir(exist_ok=True)
     (target_dir / "inventory").mkdir(exist_ok=True)
     (target_dir / "templates").mkdir(exist_ok=True)
+    (target_dir / "agents").mkdir(exist_ok=True)
+    (target_dir / "prompts").mkdir(exist_ok=True)
     
     # Determine AI-specific folder
     ai_assistant = config.get("ai_assistant", "copilot")
     if ai_assistant == "copilot":
-        (target_dir / ".github" / "agents").mkdir(parents=True, exist_ok=True)
-    elif ai_assistant == "claude":
-        (target_dir / ".claude").mkdir(exist_ok=True)
-    elif ai_assistant == "gemini":
-        (target_dir / ".gemini").mkdir(exist_ok=True)
+        (target_dir / ".github").mkdir(exist_ok=True)
+    # Claude uses CLAUDE.md in root, Gemini uses .gemini/
+    # No additional folders needed for Claude
+    # Gemini structure TBD
     
     tree.add("[cyan]●[/cyan] Select AI assistant ([green]" + ai_assistant + "[/green])")
     console.print(tree)
@@ -152,7 +160,11 @@ def copy_template_files(
     
     ai_assistant = config.get("ai_assistant", "copilot")
     if ai_assistant == "copilot":
-        files_to_copy.append((".github/copilot-instructions.md", ".github/copilot-instructions.md"))
+        files_to_copy.append((".ai-providers/copilot-instructions.md", ".github/copilot-instructions.md"))
+    elif ai_assistant == "claude":
+        files_to_copy.append((".ai-providers/CLAUDE.md", "CLAUDE.md"))
+    elif ai_assistant == "gemini":
+        files_to_copy.append((".ai-providers/GEMINI.md", "GEMINI.md"))
     
     count = 0
     for src_path, dest_path in files_to_copy:
@@ -185,42 +197,40 @@ def copy_ai_agents(
     config: Dict[str, Any],
     tree_node: Tree,
 ) -> None:
-    """Copy AI-specific agent files."""
-    ai_assistant = config.get("ai_assistant", "copilot")
+    """Copy AI-specific agent and prompt files to shared directories."""
+    # All providers now use shared agents/ and prompts/ directories
+    agents_src = root_dir / "agents"
+    prompts_src = root_dir / "prompts"
+    
+    agents_dest = target_dir / "agents"
+    prompts_dest = target_dir / "prompts"
     
     count = 0
-    if ai_assistant == "copilot":
-        agents_src = root_dir / ".github" / "agents"
-        dest_dir = target_dir / ".github" / "agents"
-    elif ai_assistant == "claude":
-        agents_src = root_dir / ".claude"
-        dest_dir = target_dir / ".claude"
-    elif ai_assistant == "gemini":
-        agents_src = root_dir / ".gemini"
-        dest_dir = target_dir / ".gemini"
-    else:
-        agents_src = None
-        dest_dir = None
     
-    if agents_src and agents_src.exists():
-        dest_dir.mkdir(parents=True, exist_ok=True)
-        
+    # Copy agent files
+    if agents_src.exists():
+        agents_dest.mkdir(parents=True, exist_ok=True)
         for agent_file in agents_src.glob("*.md"):
-            dest_file = dest_dir / agent_file.name
+            dest_file = agents_dest / agent_file.name
             shutil.copy2(agent_file, dest_file)
             count += 1
     
-    tree_node.label = f"[cyan]●[/cyan] Setup AI agent configurations ([green]{count} agents[/green])"
+    # Copy prompt files
+    if prompts_src.exists():
+        prompts_dest.mkdir(parents=True, exist_ok=True)
+        for prompt_file in prompts_src.glob("*.md"):
+            dest_file = prompts_dest / prompt_file.name
+            shutil.copy2(prompt_file, dest_file)
+            count += 1
+    
+    tree_node.label = f"[cyan]●[/cyan] Setup AI agent configurations ([green]{count} files[/green])"
 
 
 def create_gitignore(target_dir: Path, config: Dict[str, Any]) -> None:
     """Create .gitignore file."""
     gitignore_path = target_dir / ".gitignore"
     if not gitignore_path.exists():
-        ai_assistant = config.get("ai_assistant", "copilot")
-        ai_folder = f".{ai_assistant}/" if ai_assistant != "copilot" else ""
-        
-        gitignore_content = f"""# Product Kit
+        gitignore_content = """# Product Kit
 .DS_Store
 *.swp
 *.swo
@@ -230,6 +240,5 @@ def create_gitignore(target_dir: Path, config: Dict[str, Any]) -> None:
 __pycache__/
 *.pyc
 .env
-{ai_folder}
 """
         gitignore_path.write_text(gitignore_content)

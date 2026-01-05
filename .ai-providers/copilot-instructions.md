@@ -1,6 +1,6 @@
 # Product Kit - Copilot Instructions
 
-You are assisting with **Product Kit**, a framework for Requirement-Driven Design (RDD) that treats product requirements like code: structured, version-controlled, and AI-executable.
+You are assisting with **[PRODUCT_NAME]**, a framework for Requirement-Driven Design (RDD) that treats product requirements like code: structured, version-controlled, and AI-executable.
 
 ## Core Principles
 
@@ -21,7 +21,7 @@ You are assisting with **Product Kit**, a framework for Requirement-Driven Desig
 - Want to validate strategic alignment
 - Unsure which document type to create
 
-**Agent File**: `.github/agents/productkit.clarify.agent.md`
+**Agent File**: `agents/productkit.clarify.agent.md`
 
 **Context Files to Load**:
 - `constitution.md` - Standards and decision frameworks
@@ -59,7 +59,7 @@ You are assisting with **Product Kit**, a framework for Requirement-Driven Desig
 - Defining business value and ROI
 - Planning go-to-market strategy
 
-**Agent File**: `.github/agents/productkit.brd.agent.md`
+**Agent File**: `agents/productkit.brd.agent.md`
 
 **Context Files to Load**:
 - `constitution.md` - Standards and principles
@@ -97,42 +97,37 @@ You are assisting with **Product Kit**, a framework for Requirement-Driven Desig
 - Defining user stories and acceptance criteria
 - Planning technical implementation
 
-**Agent File**: `.github/agents/productkit.prd.agent.md`
+**Agent File**: `agents/productkit.prd.agent.md`
 
 **Context Files to Load**:
-- `constitution.md` - Quality standards (UX/UI, Design, Technical, Process)
-- `context/product-vision.md` - Strategic validation
-- `context/personas.md` - User needs and behaviors
-- `context/glossary.md` - Consistent terminology
-- `inventory/feature-catalog.md` - Feature conflicts
+- `constitution.md` - Quality standards
+- `context/product-vision.md` - Strategic alignment
+- `context/personas.md` - User needs
+- `context/glossary.md` - Terminology
+- `inventory/feature-catalog.md` - Existing features
 - `inventory/tech-constraints.md` - Technical limitations
-- `inventory/data-model.md` - Data requirements
-- `inventory/product-map.md` - Navigation placement
+- `inventory/data-model.md` - Data structures
+- `inventory/product-map.md` - Navigation
 
 **Template**: `templates/prd_template.md`
 
 **Workflow**:
 1. Load context files
 2. Follow PRD template structure:
-   - Problem & Goal
-   - User Stories
-   - Requirements (Functional & Non-Functional)
-   - User Flow
-   - Acceptance Criteria
-   - Analytics & Tracking
-   - Dependencies & Risks
-3. Validate against:
-   - Constitution standards
-   - Technical constraints
-   - Data model compatibility
-   - Feature catalog conflicts
-4. Provide validation checklist
-5. Suggest handoff to development
+   - Feature Overview
+   - User Stories & Acceptance Criteria
+   - UX/UI Specifications
+   - Technical Requirements
+   - Success Metrics
+   - Analytics Tracking
+   - Rollout Plan
+3. Validate against constitution
+4. Create implementation checklist
 
 ---
 
 ### `/productkit.epic` - Epic Planning Document
-**Purpose**: Create an Epic for multi-phase initiatives with breakdown and success metrics
+**Purpose**: Create an Epic document to plan a multi-phase initiative with user stories and success metrics
 
 **When to use**:
 - Planning large initiatives
@@ -140,102 +135,28 @@ You are assisting with **Product Kit**, a framework for Requirement-Driven Desig
 - Defining success metrics for initiative
 - Coordinating multiple teams
 
-**Agent File**: `.github/agents/productkit.epic.agent.md`
+**Agent File**: `agents/productkit.epic.agent.md`
 
 **Context Files to Load**:
-- `constitution.md` - Decision frameworks (RICE scoring)
-- `context/product-vision.md` - **CRITICAL** Strategic Pillars alignment
-- `context/personas.md` - Persona impact
-- `context/market-research.md` - Market validation
-- `context/glossary.md` - Terminology
-- `inventory/feature-catalog.md` - Related features
-- `inventory/tech-constraints.md` - Phasing constraints
-- `inventory/data-model.md` - Schema evolution
-- `inventory/product-map.md` - Product impact
+- `constitution.md` - Standards and principles
+- `context/product-vision.md` - Strategic alignment
+- `context/personas.md` - User needs
+- `inventory/feature-catalog.md` - Existing features
+- `inventory/tech-constraints.md` - Technical limitations
 
 **Template**: `templates/epic_template.md`
 
 **Workflow**:
 1. Load context files
 2. Follow Epic template structure:
-   - Executive Summary
-   - Strategic Alignment (must map to Strategic Pillars)
+   - Initiative Overview
    - Success Metrics
-   - Phase Breakdown
+   - Phased Approach
+   - User Stories per Phase
    - Dependencies & Risks
-   - Resource Requirements
-3. Validate against:
-   - Strategic pillars (required)
-   - Technical constraints for phasing
-   - Resource availability
-4. Suggest handoff to BRD or PRD for individual phases
-
----
-
-## Workflow Patterns
-
-### Pattern 1: Discovery → Clarification → Document
-```
-User: "Users want better analytics"
-→ /productkit.clarify
-→ Gather requirements through questions
-→ /productkit.brd or /productkit.prd
-```
-
-### Pattern 2: Direct to PRD (Well-Defined Requirements)
-```
-User: "Create PRD for PDF export feature"
-→ /productkit.prd
-→ Generate complete PRD with context
-```
-
-### Pattern 3: Large Initiative Planning
-```
-User: "Plan onboarding revamp"
-→ /productkit.epic
-→ Break into phases
-→ /productkit.prd for Phase 1
-```
-
-### Pattern 4: Business Case First
-```
-User: "Pitch new mobile app"
-→ /productkit.brd
-→ Get stakeholder buy-in
-→ /productkit.epic for implementation plan
-```
-
----
-
-## Validation Rules
-
-Always validate against:
-
-1. **Constitution Compliance**:
-   - Standards must be followed (UX/UI, Design, Technical, Process)
-   - Decision frameworks must be applied (RICE, Build vs Buy)
-   - Required elements must be present (Metrics, Analytics, Rollout Plans)
-
-2. **Strategic Alignment**:
-   - Must map to Strategic Pillars (from `context/product-vision.md`)
-   - Must support North Star Metric
-   - Must serve Business Objectives
-
-3. **Technical Feasibility**:
-   - Check against `inventory/tech-constraints.md`
-   - Verify data model compatibility
-   - Validate against existing feature catalog
-
-4. **Persona Validation**:
-   - Must serve defined personas
-   - Must address their goals and pain points
-   - Must align with their behaviors
-
-5. **Completeness**:
-   - Problem statement with evidence
-   - Success metrics with baselines and targets
-   - Analytics tracking defined
-   - Risks and assumptions documented
+   - Timeline & Milestones
+3. Break down into manageable PRDs
+4. Create tracking dashboard
 
 ---
 
@@ -260,10 +181,10 @@ Always validate against:
 - `templates/epic_template.md` - Epic structure
 
 ### Agent Files (AI Instructions)
-- `.github/agents/productkit.clarify.agent.md`
-- `.github/agents/productkit.brd.agent.md`
-- `.github/agents/productkit.prd.agent.md`
-- `.github/agents/productkit.epic.agent.md`
+- `agents/productkit.clarify.agent.md`
+- `agents/productkit.brd.agent.md`
+- `agents/productkit.prd.agent.md`
+- `agents/productkit.epic.agent.md`
 
 ---
 
@@ -318,13 +239,3 @@ Always validate against:
 
 ❌ **Don't** propose big-bang launches  
 ✅ **Do** include gradual rollout plan (Constitution requirement)
-
----
-
-## Support
-
-For more information:
-- **Quick Start**: `QUICKSTART.md`
-- **Architecture**: `ARCHITECTURE.md`
-- **Migration Guide**: `MIGRATION_COPILOT.md`
-- **Agent Documentation**: `.github/agents/README.md`

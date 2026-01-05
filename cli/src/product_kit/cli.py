@@ -125,12 +125,12 @@ def main(
 
     # Show next steps
     ai_name = config.get("ai_assistant", "copilot").title()
-    if config.get("ai_assistant") == "copilot":
-        ai_folder = ".github"
-    elif config.get("ai_assistant") == "claude":
-        ai_folder = ".claude"
-    else:
-        ai_folder = f".{config.get('ai_assistant')}"
+    ai_file_map = {
+        "copilot": ".github/copilot-instructions.md",
+        "claude": "CLAUDE.md",
+        "gemini": "GEMINI.md",
+    }
+    ai_file = ai_file_map.get(config.get("ai_assistant"), "AI_INSTRUCTIONS.md")
 
     console.print(
         Panel(
@@ -138,9 +138,11 @@ def main(
             + (f"1. cd {project_name}\n" if project_name else "1. You're already in the project directory!\n")
             + f"2. git init (if not already initialized)\n"
             f"3. code . (open in VS Code)\n"
-            f"4. Review [yellow]constitution.md[/yellow] and customize your standards\n"
-            f"5. Fill out [yellow]context/[/yellow] files with your product details\n"
-            f"6. Document current state in [yellow]inventory/[/yellow]",
+            f"4. Review [yellow]{ai_file}[/yellow] for AI assistant integration\n"
+            f"5. Review [yellow]constitution.md[/yellow] and customize your standards\n"
+            f"6. Fill out [yellow]context/[/yellow] files with your product details\n"
+            f"7. Document current state in [yellow]inventory/[/yellow]\n"
+            f"8. Explore [yellow]agents/[/yellow] to understand available commands",
             title="📋 Getting Started",
             box=box.ROUNDED,
         )
