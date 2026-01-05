@@ -208,16 +208,18 @@ def copy_ai_agents(
     tree_node: Tree,
 ) -> None:
     """Copy AI-specific agent and prompt files to shared directories."""
-    # All providers now use shared agents/ and prompts/ directories
+    ai_assistant = config.get("ai_assistant", "copilot")
+    
     agents_src = root_dir / "agents"
     prompts_src = root_dir / "prompts"
     
+    # All providers get agents/ and prompts/ in root
     agents_dest = target_dir / "agents"
     prompts_dest = target_dir / "prompts"
     
     count = 0
     
-    # Copy agent files
+    # Copy agent files to root
     if agents_src.exists():
         agents_dest.mkdir(parents=True, exist_ok=True)
         for agent_file in agents_src.glob("*.md"):
@@ -225,13 +227,36 @@ def copy_ai_agents(
             shutil.copy2(agent_file, dest_file)
             count += 1
     
-    # Copy prompt files
+    # Copy prompt files to root
     if prompts_src.exists():
         prompts_dest.mkdir(parents=True, exist_ok=True)
         for prompt_file in prompts_src.glob("*.md"):
             dest_file = prompts_dest / prompt_file.name
             shutil.copy2(prompt_file, dest_file)
             count += 1
+    
+    # GitHub Copilot also needs agents/ and prompts/ in .github for slash commands
+    if ai_assistant == "copilot":
+        github_dir = target_dir / ".github"
+        github_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Copy entire agents folder to .github/agents/
+        if agents_src.exists():
+            github_agents = github_dir / "agents"
+            github_agents.mkdir(parents=True, exist_ok=True)
+            for agent_file in agents_src.glob("*.md"):
+                dest_file = github_agents / agent_file.name
+                shutil.copy2(agent_file, dest_file)
+                count += 1
+        
+        # Copy entire prompts folder to .github/prompts/
+        if prompts_src.exists():
+            github_prompts = github_dir / "prompts"
+            github_prompts.mkdir(parents=True, exist_ok=True)
+            for prompt_file in prompts_src.glob("*.md"):
+                dest_file = github_prompts / prompt_file.name
+                shutil.copy2(prompt_file, dest_file)
+                count += 1
     
     tree_node.label = f"[cyan]●[/cyan] Setup AI agent configurations ([green]{count} files[/green])"
 
