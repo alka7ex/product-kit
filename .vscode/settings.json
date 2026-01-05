@@ -4,6 +4,7 @@
         "productkit.brd": true,
         "productkit.prd": true,
         "productkit.epic": true,
+        "productkit.user-story": true,
         "productkit.constitution": true,
         "productkit.update-context": true,
         "productkit.update-inventory": true

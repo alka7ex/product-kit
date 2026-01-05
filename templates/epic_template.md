@@ -1,10 +1,40 @@
 # 🚩 Epic Template
 <!-- Document Title: [EPIC NAME] -->
+<!-- 
+📁 File Location Convention for Multiple Epics per BRD:
+Save this file as: requirements/XXX-feature-name/epic-NNN-epic-title.md
+
+Examples for a single BRD split into multiple epics:
+  requirements/001-payment-system/epic-001-core-payments.md
+  requirements/001-payment-system/epic-002-payment-methods.md
+  requirements/001-payment-system/epic-003-refund-workflow.md
+  
+  requirements/042-user-dashboard/epic-001-dashboard-foundation.md
+  requirements/042-user-dashboard/epic-002-analytics-widgets.md
+
+Why multiple epics per BRD?
+- Keeps each epic focused and manageable (typically 2-4 weeks per epic)
+- Allows parallel team execution
+- Enables incremental delivery and faster feedback
+- Easier to track progress and dependencies
+- Prevents epic scope creep
+
+When to split a BRD into multiple epics:
+✅ Estimated effort > 6 weeks
+✅ Multiple distinct user workflows involved
+✅ Can be delivered in sequential phases with independent value
+✅ Multiple teams or specializations needed
+✅ Clear boundaries between technical components
+
+Epic naming pattern: epic-NNN-[phase/component]-[focus].md
+-->
 
 | Metadata | Details |
 | :--- | :--- |
 | **Epic Name** | [EPIC_NAME] |
-| **ID** | [EPIC_ID] |
+| **Epic ID** | [EPIC_ID] |
+| **BRD Reference** | [Link to parent BRD](../XXX-feature-name/brd.md) |
+| **Epic Sequence** | [EPIC_NUMBER] of [TOTAL_EPICS] |
 | **Owner** | [OWNER_NAME] |
 | **Status** | [STATUS] |
 | **Quarter** | [TARGET_QUARTER] |
@@ -12,100 +42,138 @@
 | **Target Completion** | [TARGET_DATE] |
 
 <!-- Example:
-| **Epic Name** | Revamp User Onboarding Experience |
-| **ID** | EPIC-001 |
+| **Epic Name** | Payment Core Infrastructure |
+| **Epic ID** | EPIC-001.1 |
+| **BRD Reference** | [Payment System BRD](../001-payment-system/brd.md) |
+| **Epic Sequence** | 1 of 3 |
 | **Owner** | Sarah Chen |
 | **Status** | `Planning` / `In Progress` / `Done` / `On Hold` |
 | **Quarter** | Q2 2026 |
 | **Start Date** | 2026-04-01 |
-| **Target Completion** | 2026-06-30 |
+| **Target Completion** | 2026-04-30 |
+-->
+
+### Related Epics
+*Other epics in this BRD (for context and sequencing)*
+
+| Epic | Status | Dependencies | Target Date |
+| :--- | :--- | :--- | :--- |
+| [RELATED_EPIC_1] | [STATUS_1] | [DEPENDENCIES_1] | [DATE_1] |
+| [RELATED_EPIC_2] | [STATUS_2] | [DEPENDENCIES_2] | [DATE_2] |
+
+<!-- Example:
+| Epic | Status | Dependencies | Target Date |
+| :--- | :--- | :--- | :--- |
+| [Epic 1: Core Payment Infrastructure](epic-001-core-payments.md) | ✅ Done | None | 2026-04-30 |
+| **[Epic 2: Payment Methods (This Epic)](epic-002-payment-methods.md)** | 🟡 In Progress | Epic 1 | 2026-05-31 |
+| [Epic 3: Refund Workflow](epic-003-refund-workflow.md) | ⚪ Not Started | Epic 2 | 2026-06-30 |
 -->
 
 ---
 
 ## 1. Overview
-*A high-level summary of this initiative.*
+*A focused summary of this specific epic (not the entire BRD).*
 
-### 1.1 Objective
-*What is the big goal?*
+### 1.1 Epic Scope
+*What does THIS epic specifically cover? How does it fit into the larger BRD?*
+
+[EPIC_SCOPE_DESCRIPTION]
+
+<!-- Example: \"This epic (1 of 3) establishes the core payment infrastructure including the payment gateway integration, transaction processing, and basic payment logging. It provides the foundation for subsequent epics covering payment methods and refund workflows.\" -->
+
+### 1.2 Objective
+*What is the specific goal of THIS epic?*
 
 [OBJECTIVE_DESCRIPTION]
 
-<!-- Example: \"Revamp the User Onboarding experience to increase activation rate by 10% and reduce time-to-value from 15 minutes to under 5 minutes.\" -->
+<!-- Example: \"Build the foundational payment processing system that can handle credit card transactions with 99.9% uptime and process payments within 3 seconds.\" -->
 
-### 1.2 Hypothesis
-*If we do X, then Y will happen.*
+### 1.3 Hypothesis
+*If we do X (in this epic), then Y will happen.*
 
 [HYPOTHESIS_STATEMENT]
 
-<!-- Example: \"If we simplify the signup form from 8 fields to 2 fields and add a progress indicator with contextual tips, users will feel less overwhelmed and more motivated to complete the setup, resulting in a 10% increase in activation rate.\" -->
+<!-- Example: \"If we integrate with Stripe as our primary payment gateway and implement proper error handling, we can process credit card payments reliably and reduce payment failures from the current 15% (manual process) to under 2%.\" -->
 
-### 1.3 Strategic Alignment
-*How does this support our Product Vision?*
+### 1.4 Strategic Alignment
+*How does this epic support the overall BRD objective and Product Vision?*
 
+-   **BRD Objective**: [BRD_OBJECTIVE]
 -   **Strategic Pillar**: [STRATEGIC_PILLAR]
 -   **Business Goal**: [BUSINESS_GOAL]
 -   **Persona Impact**: [PERSONA_IMPACT]
 
 <!-- Example:
--   **Strategic Pillar**: Growth & User Acquisition
--   **Business Goal**: Increase MAU by 25% in 2026
--   **Persona Impact**: Primary focus on \"The Busy Manager\" who values speed and simplicity
+-   **BRD Objective**: Enable seamless payment processing for all subscription tiers
+-   **Strategic Pillar**: Revenue Growth & Monetization
+-   **Business Goal**: Process $1M in transactions monthly by Q3 2026
+-   **Persona Impact**: Primary focus on \"The Startup Founder\" who needs reliable payment processing
 -->
 
 ---
 
 ## 2. Scope & Phasing
+*What's included in THIS epic only. Keep it focused and deliverable in 2-4 weeks.*
 
-### Phase 1: MVP (Must Have)
-*The bare minimum to ship value.*
+### 2.1 In Scope for This Epic
+*The specific features/capabilities delivered by THIS epic.*
 
--   [ ] [MVP_FEATURE_1]
--   [ ] [MVP_FEATURE_2]
--   [ ] [MVP_FEATURE_3]
--   [ ] [MVP_FEATURE_4]
+-   [ ] [IN_SCOPE_ITEM_1]
+-   [ ] [IN_SCOPE_ITEM_2]
+-   [ ] [IN_SCOPE_ITEM_3]
+-   [ ] [IN_SCOPE_ITEM_4]
 
-<!-- Example:
--   [ ] Simplified Signup Form (Email + Password only, remove company size, industry, etc.)
--   [ ] "Welcome" Email trigger on successful signup
--   [ ] Basic "Getting Started" checklist (3 items: Create Project, Invite Team, Complete First Task)
--   [ ] Progress indicator showing steps completed
+<!-- Example for Epic 1 (Core Payment Infrastructure):
+-   [ ] Stripe payment gateway integration
+-   [ ] Credit card payment processing API
+-   [ ] Transaction status tracking (pending, success, failed)
+-   [ ] Basic payment logging and audit trail
+-   [ ] Webhook handling for payment confirmations
 -->
 
-### Phase 2: Enhanced (Should Have)
-*Fast follows that add significant value.*
+### 2.2 Out of Scope for This Epic
+*What we're explicitly NOT doing in this epic (but might be in other epics).*
 
--   [ ] [ENHANCED_FEATURE_1]
--   [ ] [ENHANCED_FEATURE_2]
--   [ ] [ENHANCED_FEATURE_3]
+-   [OUT_OF_SCOPE_1] - [WHICH_EPIC_HANDLES_THIS]
+-   [OUT_OF_SCOPE_2] - [WHICH_EPIC_HANDLES_THIS]
+-   [OUT_OF_SCOPE_3] - [WHICH_EPIC_HANDLES_THIS]
 
 <!-- Example:
--   [ ] Social Login (Google/GitHub OAuth)
--   [ ] Interactive product tour with tooltips
--   [ ] Personalized onboarding based on use case selection
+-   Multiple payment methods (PayPal, bank transfer) - Covered in Epic 2: Payment Methods
+-   Refund processing - Covered in Epic 3: Refund Workflow
+-   Recurring payments/subscriptions - Future epic (not in current BRD scope)
+-   Invoice generation - Not required for MVP
 -->
 
-### Phase 3: Delight (Could Have)
-*Nice to haves that enhance experience.*
+### 2.3 Internal Phases (Optional)
+*If this epic needs sub-phases, list them here. Otherwise, remove this section.*
 
--   [ ] [DELIGHT_FEATURE_1]
--   [ ] [DELIGHT_FEATURE_2]
+**Phase 1: Foundation (Week 1-2)**
+-   [ ] [PHASE_1_ITEM_1]
+-   [ ] [PHASE_1_ITEM_2]
 
-<!-- Example:
--   [ ] Gamification (badges for completing onboarding tasks)
--   [ ] Video tutorials embedded in the flow
--   [ ] Collaborative onboarding (invite team during setup)
--->
+**Phase 2: Core Features (Week 2-3)**
+-   [ ] [PHASE_2_ITEM_1]
+-   [ ] [PHASE_2_ITEM_2]
 
-### Out of Scope
-*What we're explicitly NOT doing.*
-
--   [OUT_OF_SCOPE_1]
--   [OUT_OF_SCOPE_2]
+**Phase 3: Polish & Testing (Week 3-4)**
+-   [ ] [PHASE_3_ITEM_1]
+-   [ ] [PHASE_3_ITEM_2]
 
 <!-- Example:
--   Enterprise SSO integration (requires separate security audit)
--   Custom branding during onboarding (Phase 4 consideration)
+**Phase 1: Foundation (Week 1-2)**
+-   [ ] Stripe API integration setup
+-   [ ] Payment model and database schema
+
+**Phase 2: Core Features (Week 2-3)**
+-   [ ] Payment processing endpoint
+-   [ ] Webhook handling
+-   [ ] Transaction logging
+
+**Phase 3: Polish & Testing (Week 3-4)**
+-   [ ] Error handling and retry logic
+-   [ ] Load testing
+-   [ ] Security audit
 -->
 
 ---
@@ -131,43 +199,47 @@
 ---
 
 ## 4. Success Metrics
-*How do we measure the success of this Epic?*
+*How do we measure the success of THIS epic specifically?*
 
-### 4.1 Primary Metrics (North Star)
+### 4.1 Epic-Specific Metrics
 
 | Metric | Definition | Current Baseline | Target | Timeline |
 | :--- | :--- | :--- | :--- | :--- |
-| [PRIMARY_METRIC_1] | [DEFINITION_1] | [BASELINE_1] | [TARGET_1] | [TIMELINE_1] |
-| [PRIMARY_METRIC_2] | [DEFINITION_2] | [BASELINE_2] | [TARGET_2] | [TIMELINE_2] |
+| [EPIC_METRIC_1] | [DEFINITION_1] | [BASELINE_1] | [TARGET_1] | [TIMELINE_1] |
+| [EPIC_METRIC_2] | [DEFINITION_2] | [BASELINE_2] | [TARGET_2] | [TIMELINE_2] |
 
-<!-- Example:
+<!-- Example for Epic 1 (Core Payment Infrastructure):
 | Metric | Definition | Current Baseline | Target | Timeline |
 | :--- | :--- | :--- | :--- | :--- |
-| **Activation Rate** | % of signups who complete the onboarding checklist | 30% | 40% | 3 months post-launch |
-| **Time to Value** | Avg time from signup to first key action (creating a task) | 15 mins | < 5 mins | 3 months post-launch |
+| **Payment Success Rate** | % of credit card transactions that complete successfully | 0% (no system) | 98%+ | 2 weeks post-launch |
+| **Transaction Processing Time** | Avg time from payment initiation to confirmation | N/A | < 3 seconds | 2 weeks post-launch |
+| **System Uptime** | % of time payment system is operational | N/A | 99.9% | 1 month post-launch |
 -->
 
-### 4.2 Secondary Metrics
+### 4.2 Contribution to BRD Metrics
+*How does this epic contribute to the overall BRD goals?*
 
--   [SECONDARY_METRIC_1]: [TARGET_1]
--   [SECONDARY_METRIC_2]: [TARGET_2]
--   [SECONDARY_METRIC_3]: [TARGET_3]
+-   **BRD North Star Metric**: [BRD_METRIC]
+-   **This Epic's Contribution**: [CONTRIBUTION_DESCRIPTION]
 
 <!-- Example:
--   Drop-off rate at signup: Reduce from 45% to 30%
--   Support tickets related to onboarding: Reduce by 50%
--   User satisfaction (CSAT): Increase from 3.5 to 4.0 (out of 5)
+-   **BRD North Star Metric**: Process $1M in monthly transactions by Q3 2026
+-   **This Epic's Contribution**: Enables credit card payment processing (expected to be 80% of transaction volume). Without this epic, no transactions can be processed.
 -->
 
-### 4.3 Leading Indicators
-*Early signals that we're on track.*
+### 4.3 Success Criteria (Definition of Done)
 
--   [LEADING_INDICATOR_1]
--   [LEADING_INDICATOR_2]
+-   [ ] [SUCCESS_CRITERIA_1]
+-   [ ] [SUCCESS_CRITERIA_2]
+-   [ ] [SUCCESS_CRITERIA_3]
+-   [ ] [SUCCESS_CRITERIA_4]
 
 <!-- Example:
--   Week 1: Signup completion rate improves by 5%
--   Week 2: Time on signup page decreases by 20%
+-   [ ] Successfully process 100 test transactions with 0 failures
+-   [ ] Payment processing time consistently under 3 seconds (p95)
+-   [ ] All critical security requirements met (PCI compliance basics)
+-   [ ] 95% unit test coverage for payment processing code
+-   [ ] Documentation complete for integration
 -->
 
 ---
@@ -175,24 +247,38 @@
 ## 5. Dependencies & Risks
 
 ### 5.1 Dependencies
-*What needs to be completed before or during this Epic?*
+*What needs to be completed before or during THIS epic?*
 
-| Dependency | Type | Owner | Status | Notes |
-| :--- | :--- | :--- | :--- | :--- |
-| [DEPENDENCY_1] | [TYPE_1] | [OWNER_1] | [STATUS_1] | [NOTES_1] |
-| [DEPENDENCY_2] | [TYPE_2] | [OWNER_2] | [STATUS_2] | [NOTES_2] |
+| Dependency | Type | Owner | Status | Impact if Delayed | Notes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [DEPENDENCY_1] | [TYPE_1] | [OWNER_1] | [STATUS_1] | [IMPACT_1] | [NOTES_1] |
+| [DEPENDENCY_2] | [TYPE_2] | [OWNER_2] | [STATUS_2] | [IMPACT_2] | [NOTES_2] |
 
 <!-- Example:
-| Dependency | Type | Owner | Status | Notes |
-| :--- | :--- | :--- | :--- | :--- |
-| Marketing landing page copy update | External | Marketing Team | ⚪ Not Started | Need new messaging by Feb 1 |
-| OAuth provider setup (Google) | Technical | Engineering | 🟡 In Progress | Waiting on API approval |
-| User research findings | Data | Research Team | ✅ Complete | Report shared Jan 15 |
+| Dependency | Type | Owner | Status | Impact if Delayed | Notes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Stripe account setup & API keys | External | Finance Team | ✅ Complete | Blocker | Account created, keys in vault |
+| Payment data model design | Technical | Data Team | 🟡 In Progress | High - blocks dev | Review scheduled Jan 10 |
+| PCI compliance review | Legal | Compliance | ⚪ Not Started | Medium - can launch internal beta | Required before public launch |
 
-Types: Technical, External Team, Data/Research, Design, Legal/Compliance
+Types: Technical, External Team, Data/Research, Design, Legal/Compliance, Previous Epic
 -->
 
-### 5.2 Risks
+### 5.2 Cross-Epic Dependencies
+*Dependencies on other epics in this BRD.*
+
+| Dependency Epic | Relationship | Impact | Mitigation |
+| :--- | :--- | :--- | :--- |
+| [EPIC_NAME] | [BLOCKS/BLOCKED_BY] | [IMPACT] | [MITIGATION] |
+
+<!-- Example:
+| Dependency Epic | Relationship | Impact | Mitigation |
+| :--- | :--- | :--- | :--- |
+| Epic 2: Payment Methods | BLOCKS - Epic 2 can't start until this completes | High | Ensure this epic finishes on time; keep Epic 2 team informed |
+| Epic 3: Refund Workflow | BLOCKS - Epic 3 needs payment logging from this epic | Medium | Clearly document payment logging API for Epic 3 team |
+-->
+
+### 5.3 Risks
 
 | Risk | Impact | Probability | Mitigation | Owner |
 | :--- | :--- | :--- | :--- | :--- |
@@ -202,22 +288,23 @@ Types: Technical, External Team, Data/Research, Design, Legal/Compliance
 <!-- Example:
 | Risk | Impact | Probability | Mitigation | Owner |
 | :--- | :--- | :--- | :--- | :--- |
-| Reducing signup fields might lower lead quality for Sales | Medium | High | Track lead quality metrics; add progressive profiling later | Product |
-| OAuth integration delays launch | High | Medium | Start with email/password MVP; add OAuth in Phase 2 | Engineering |
-| Users skip onboarding checklist | Medium | Medium | Make checklist persistent; add incentives (discount/badge) | Product |
+| Stripe API changes during development | High | Low | Monitor Stripe API changelog; use stable API version | Engineering Lead |
+| Payment processing time exceeds 3s target | Medium | Medium | Load test early; optimize database queries; use caching | Engineering Lead |
+| Scope creep from stakeholders requesting additional payment methods | Medium | High | Clearly document Epic 1 scope; defer to Epic 2; PM to manage expectations | Product Owner |
 -->
 
-### 5.3 Assumptions
-*What are we assuming to be true?*
+### 5.4 Assumptions
+*What are we assuming to be true for THIS epic?*
 
 -   [ASSUMPTION_1]
 -   [ASSUMPTION_2]
 -   [ASSUMPTION_3]
 
 <!-- Example:
--   Users prefer faster signup even if it means less personalization
--   Current onboarding metrics are accurate (not affected by bots)
--   Engineering can complete OAuth integration in 2 sprints
+-   Stripe is the right payment gateway (decision already validated in BRD)
+-   Credit card processing is sufficient for Epic 1 (other methods in Epic 2)
+-   Current transaction volume estimates (1000/month) are accurate
+-   Engineering team has 3 FTE for full 4 weeks
 -->
 
 ---
@@ -279,27 +366,70 @@ Types: Technical, External Team, Data/Research, Design, Legal/Compliance
 
 ## 8. Resources & Budget
 
-### 8.1 Team Allocation
+### 8.1 Team Allocation (for this epic only)
 -   **Engineering**: [ALLOCATION]
 -   **Design**: [ALLOCATION]
 -   **QA**: [ALLOCATION]
 
 <!-- Example:
--   **Engineering**: 3 FTE for 8 weeks (Phase 1), 2 FTE for 4 weeks (Phase 2)
--   **Design**: 1 FTE for 4 weeks
--   **QA**: 1 FTE for 3 weeks
+-   **Engineering**: 3 FTE for 4 weeks (backend focus)
+-   **Design**: 0.5 FTE for 1 week (basic UI for payment status)
+-   **QA**: 1 FTE for 2 weeks (integration & security testing)
 -->
 
-### 8.2 External Costs
+### 8.2 External Costs (for this epic only)
 -   [COST_1]
 -   [COST_2]
 
 <!-- Example:
--   User research sessions: $5,000
--   Third-party analytics tools: $500/month
+-   Stripe sandbox testing: $0 (free tier)
+-   Security audit consultation: $2,000
+-   Load testing tools: $200
 -->
 
 ---
 
+## 9. Epic Breakdown Best Practices
+
+### ✅ Good Epic Size Indicators:
+-   Can be completed in 2-4 weeks by a focused team
+-   Has clear, measurable success criteria
+-   Delivers independent user value (or technical foundation)
+-   Has <15 user stories or tasks
+-   Single team can own it
+-   Clear start and end points
+
+### ⚠️ Signs Your Epic is Too Large:
+-   Estimated > 6 weeks of work
+-   Multiple teams need to coordinate extensively
+-   Too many dependencies to track
+-   Success metrics are vague or too broad
+-   Scope keeps expanding during planning
+-   → **Solution**: Split into multiple sequential epics
+
+### 💡 How to Split a BRD into Multiple Epics:
+
+**Option 1: Sequential Phases**
+- Epic 1: Foundation/Infrastructure
+- Epic 2: Core Features
+- Epic 3: Advanced Features
+
+**Option 2: By User Journey**
+- Epic 1: User Acquisition Flow
+- Epic 2: Activation Flow
+- Epic 3: Retention Features
+
+**Option 3: By Technical Layer**
+- Epic 1: Backend API
+- Epic 2: Frontend UI
+- Epic 3: Integration & Testing
+
+**Option 4: By Feature Set**
+- Epic 1: Payment Method A (Credit Card)
+- Epic 2: Payment Method B (PayPal)
+- Epic 3: Refunds & Disputes
+
+---
+
 **Epic Version**: [EPIC_VERSION] | **Last Updated**: [LAST_UPDATED_DATE]
-<!-- Example: Epic Version: 1.2.0 | Last Updated: 2026-01-02 -->
+<!-- Example: Epic Version: 1.0.0 | Last Updated: 2026-01-05 -->

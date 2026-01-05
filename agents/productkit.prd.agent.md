@@ -5,6 +5,9 @@ handoffs:
   - label: Create Business Case First
     agent: productkit.brd
     prompt: Create a BRD for strategic context before this PRD
+  - label: Break Down into User Stories
+    agent: productkit.user-story
+    prompt: Create user stories from this PRD for sprint planning
 ---
 
 # Product Requirements Document Creator
