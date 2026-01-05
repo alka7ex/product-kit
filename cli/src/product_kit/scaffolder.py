@@ -21,15 +21,20 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     # Create progress tree
     tree = Tree("├── [cyan]●[/cyan] Initialize directory structure")
     
-    # Get the root directory of the product-kit project
-    # CLI is in product-kit/cli/src/product_kit, so go up 4 levels to get product-kit root
+    # Get the data directory (either from package or development)
     package_dir = Path(__file__).parent  # /product-kit/cli/src/product_kit
-    root_dir = package_dir.parent.parent.parent  # /product-kit
+    data_dir = package_dir / "data"
     
-    # Verify we're in the right place
+    # If data dir doesn't exist (development mode), use root directory
+    if not data_dir.exists():
+        root_dir = package_dir.parent.parent.parent  # /product-kit
+    else:
+        root_dir = data_dir
+    
+    # Verify we have the necessary files
     if not (root_dir / "agents").exists():
         raise FileNotFoundError(
-            f"Cannot find product-kit root directory. "
+            f"Cannot find product-kit data. "
             f"Expected agents/ folder at {root_dir}"
         )
     

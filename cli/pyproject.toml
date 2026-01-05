@@ -1,6 +1,6 @@
 [project]
 name = "product-kit"
-version = "1.0.6"
+version = "1.0.7"
 description = "CLI to scaffold Product Kit framework for requirement-driven design"
 authors = [
     { name = "Haikal", email = "farhienzahaikal@gmail.com" }
@@ -63,6 +63,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/product_kit"]
+artifacts = ["src/product_kit/data"]
 
 [tool.black]
 line-length = 88
