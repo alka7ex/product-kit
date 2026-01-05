@@ -1,10 +1,10 @@
 ---
 title: Update Inventory Files
 description: Add or update information in inventory files (data model, feature catalog, product map, tech constraints)
-next_steps:
-  - "Create requirements: Use /productkit.clarify"
-  - "Validate constraints: Review tech-constraints.md"
-  - "Check constitution: Review constitution.md"
+handoffs:
+  - label: Start Requirements Gathering
+    agent: productkit.clarify
+    prompt: Start gathering requirements for a new feature
 ---
 
 # Inventory Files Update Agent

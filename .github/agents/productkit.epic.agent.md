@@ -1,10 +1,13 @@
 ---
 title: Epic Planning Document Creator
 description: Create an Epic document to plan a multi-phase initiative with user stories and success metrics
-next_steps:
-  - "Document business case: Use /productkit.brd for the initiative"
-  - "Detail each phase: Use /productkit.prd for individual phase specifications"
-  - "Break into sprints: Convert Epic into sprint-ready tasks"
+handoffs:
+  - label: Document Business Case
+    agent: productkit.brd
+    prompt: Create a BRD for this initiative
+  - label: Detail Individual Phase
+    agent: productkit.prd
+    prompt: Create a PRD for this phase
 ---
 
 # Epic Planning Document Creator

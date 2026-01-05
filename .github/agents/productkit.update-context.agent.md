@@ -1,10 +1,13 @@
 ---
 title: Update Context Files
 description: Add or update information in context files (glossary, market research, personas, product vision)
-next_steps:
-  - "Update inventory: Use /productkit.update-inventory"
-  - "Create requirements: Use /productkit.clarify"
-  - "Validate against constitution: Review constitution.md"
+handoffs:
+  - label: Update Inventory
+    agent: productkit.update-inventory
+    prompt: Update inventory with current product state
+  - label: Start Requirements Gathering
+    agent: productkit.clarify
+    prompt: Start gathering requirements for a new feature
 ---
 
 # Context Files Update Agent

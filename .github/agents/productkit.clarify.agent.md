@@ -1,10 +1,16 @@
 ---
 title: Requirements Clarification
 description: Ask clarifying questions to refine requirements before creating BRD, PRD, or Epic
-next_steps:
-  - "For strategic decisions: Use /productkit.brd to create Business Requirements"
-  - "For detailed specs: Use /productkit.prd to create Product Requirements"
-  - "For multi-phase work: Use /productkit.epic to plan the initiative"
+handoffs:
+  - label: Create Business Requirements
+    agent: productkit.brd
+    prompt: Create a BRD for this requirement
+  - label: Create Product Requirements
+    agent: productkit.prd
+    prompt: Create a PRD for this requirement
+  - label: Plan Multi-Phase Initiative
+    agent: productkit.epic
+    prompt: Create an Epic to plan this initiative
 ---
 
 # Requirements Clarification Agent

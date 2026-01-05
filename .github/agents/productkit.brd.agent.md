@@ -1,9 +1,13 @@
 ---
 title: Business Requirements Document Creator
 description: Create a Business Requirements Document (BRD) with strategic alignment and ROI analysis
-next_steps:
-  - "Generate detailed PRD: Use /productkit.prd with this BRD as context"
-  - "Plan as Epic: Use /productkit.epic to break down into phases and user stories"
+handoffs:
+  - label: Generate Detailed PRD
+    agent: productkit.prd
+    prompt: Create a PRD based on this BRD
+  - label: Plan as Epic
+    agent: productkit.epic
+    prompt: Break this BRD down into phases and user stories
 ---
 
 # Business Requirements Document Creator

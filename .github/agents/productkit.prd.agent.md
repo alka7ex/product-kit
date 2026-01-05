@@ -1,10 +1,10 @@
 ---
 title: Product Requirements Document Creator
 description: Create a Product Requirements Document (PRD) with detailed specifications and acceptance criteria
-next_steps:
-  - "Start with business case: Use /productkit.brd for strategic context first"
-  - "Plan implementation: Create technical design document after PRD approval"
-  - "Break into tasks: Convert PRD into actionable development tasks"
+handoffs:
+  - label: Create Business Case First
+    agent: productkit.brd
+    prompt: Create a BRD for strategic context before this PRD
 ---
 
 # Product Requirements Document Creator

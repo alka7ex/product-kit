@@ -1,10 +1,16 @@
 ---
 title: Create Product Constitution
 description: Generate a comprehensive constitution.md with principles, standards, and decision frameworks
-next_steps:
-  - "Update context files: Use /productkit.update-context"
-  - "Update inventory: Use /productkit.update-inventory"
-  - "Start requirements: Use /productkit.clarify"
+handoffs:
+  - label: Update Context Files
+    agent: productkit.update-context
+    prompt: Update context files with product information
+  - label: Update Inventory
+    agent: productkit.update-inventory
+    prompt: Update inventory with current product state
+  - label: Start Requirements Gathering
+    agent: productkit.clarify
+    prompt: Start gathering requirements for a new feature
 ---
 
 # Product Constitution Generator
