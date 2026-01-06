@@ -35,6 +35,9 @@ Story naming pattern: us-NNN-[action]-[object].md
 | **Story Title** | [STORY_TITLE] |
 | **Related PRD** | [Link to PRD](../prd.md) |
 | **Related Epic** | [Link to Epic](../epic-NNN-epic-title.md) |
+| **Domain** | [DOMAIN_NAME] |
+| **Feature Group** | [FEATURE_GROUP] |
+| **Group Rationale** | [MERGE_SEPARATE_REASON] |
 | **Story Points** | [STORY_POINTS] |
 | **Priority** | [PRIORITY] |
 | **Status** | [STATUS] |
@@ -46,6 +49,9 @@ Story naming pattern: us-NNN-[action]-[object].md
 | **Story Title** | Process Credit Card Payment |
 | **Related PRD** | [Payment System PRD](../prd.md) |
 | **Related Epic** | [Epic 1: Core Payment Infrastructure](../epic-001-core-payments.md) |
+| **Domain** | Payment Processing |
+| **Feature Group** | Payment transaction |
+| **Group Rationale** | Combined card form, validation, confirmation, and error handling as one flow |
 | **Story Points** | 5 |
 | **Priority** | P0 (Must Have) |
 | **Status** | `Ready` / `In Progress` / `In Review` / `Done` |
@@ -294,12 +300,12 @@ Users complete signup → See pricing page → Enter credit card details → Cli
 ## Story Breakdown Tips
 
 ### ✅ Good User Story Characteristics:
-- **Independent**: Can be developed and tested separately
+- **Independent**: Can be developed and delivered separately
 - **Negotiable**: Details can be refined through conversation
 - **Valuable**: Delivers clear user or business value
 - **Estimable**: Team can size it (typically 1-8 story points)
 - **Small**: Completable within one sprint (1-2 weeks)
-- **Testable**: Clear acceptance criteria that can be verified
+- **Verifiable**: Clear acceptance criteria that can be verified
 
 ### ⚠️ Signs Your Story is Too Large:
 - Estimated > 8 story points
@@ -308,6 +314,10 @@ Users complete signup → See pricing page → Enter credit card details → Cli
 - Involves multiple systems or teams
 - Hard to describe in one sentence
 - → **Solution**: Split into multiple smaller stories
+
+### 🔀 Merge vs. Separate Guidance
+- **Merge**: CRUD for the same entity, similar UI interactions, tightly coupled features
+- **Separate**: Different business logic, distinct user flows, can be delivered independently
 
 ### 💡 How to Split Large Stories:
 

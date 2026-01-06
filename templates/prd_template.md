@@ -64,21 +64,50 @@
 
 ---
 
-## 2. User Stories
-*Format: As a [Persona], I want to [Action], so that [Benefit].*
+## 2. User Story Groups (By Domain/Feature)
+*Group stories by domain and feature cluster, then break into individual stories as needed.*
 
-| ID | Story | Persona | Priority | Acceptance Criteria |
-| :--- | :--- | :--- | :--- | :--- |
-| [STORY_ID_1] | As a **[PERSONA_1]**, I want to **[ACTION_1]**, so that I can **[BENEFIT_1]**. | [PERSONA_1] | [PRIORITY_1] | [ACCEPTANCE_CRITERIA_1] |
-| [STORY_ID_2] | As a **[PERSONA_2]**, I want to **[ACTION_2]**, so that I can **[BENEFIT_2]**. | [PERSONA_2] | [PRIORITY_2] | [ACCEPTANCE_CRITERIA_2] |
-| [STORY_ID_3] | As a **[PERSONA_3]**, I want to **[ACTION_3]**, so that I can **[BENEFIT_3]**. | [PERSONA_3] | [PRIORITY_3] | [ACCEPTANCE_CRITERIA_3] |
+**Merge when**: CRUD for the same entity, similar UI interactions, tightly coupled features.  
+**Separate when**: Different business logic, distinct user flows, can be delivered independently.
+
+| Group ID | Domain | Feature Group | Includes | Priority | Related Stories |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [GROUP_ID_1] | [DOMAIN_1] | [FEATURE_GROUP_1] | [INCLUDES_1] | [PRIORITY_1] | [STORY_IDS_1] |
+| [GROUP_ID_2] | [DOMAIN_2] | [FEATURE_GROUP_2] | [INCLUDES_2] | [PRIORITY_2] | [STORY_IDS_2] |
+| [GROUP_ID_3] | [DOMAIN_3] | [FEATURE_GROUP_3] | [INCLUDES_3] | [PRIORITY_3] | [STORY_IDS_3] |
 
 <!-- Example:
-| ID | Story | Persona | Priority | Acceptance Criteria |
-| :--- | :--- | :--- | :--- | :--- |
-| **US-01** | As a **Data Analyst**, I want to **filter charts by date range**, so that I can **analyze seasonal trends**. | Power User | P0 | - Date picker allows custom range selection<br>- Charts update within 1s of filter change<br>- Default is "Last 30 Days"<br>- Supports relative ranges ("Last week", "Last month") |
-| **US-02** | As a **Manager**, I want to **export the dashboard as PDF**, so that I can **share it in meetings**. | Busy Manager | P1 | - PDF retains layout and formatting<br>- Filename includes dashboard name and date<br>- Export completes within 5 seconds<br>- Supports A4 and Letter sizes |
-| **US-03** | As a **Team Lead**, I want to **save custom dashboard views**, so that I can **quickly access my most-used metrics**. | Busy Manager | P2 | - Can save up to 5 custom views<br>- Views persist across sessions<br>- Can share saved views with team members |
+| Group ID | Domain | Feature Group | Includes | Priority | Related Stories |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **G-01** | Product Search | Search with autocomplete | Input field, autocomplete dropdown, search results, no results state | P0 | US-01, US-02 |
+| **G-02** | Product Search | Filter system | Filter by category, filter by price range, clear filters button | P1 | US-03 |
+| **G-03** | Product Search | Sort options | Price, relevance, date | P2 | US-04 |
+| **G-04** | Shopping Cart | Cart management | Add item, remove item, update quantity, display total, empty cart | P0 | US-05, US-06 |
+| **G-05** | Shopping Cart | Promo code system | Apply, remove, validation, error states | P1 | US-07 |
+| **G-06** | Shopping Cart | Save for later | Move to saved list, restore to cart | P2 | US-08 |
+| **G-07** | User Registration | Registration | Email/password form, validation, password strength, email verification, terms checkbox, success/error states | P0 | US-09 |
+| **G-08** | Dashboard Analytics | Metrics display | Revenue chart, user growth metrics, refresh button, real-time updates | P0 | US-10, US-11 |
+| **G-09** | Dashboard Analytics | Export data | CSV export, PDF export | P1 | US-12 |
+| **G-10** | Dashboard Analytics | Date range filter | Presets, custom range, quick compare | P1 | US-13 |
+| **G-11** | Payment Processing | Payment transaction | Card form, validation, gateway integration, confirmation screen, error handling | P0 | US-14, US-15 |
+| **G-12** | Payment Processing | Receipt generation | Email receipt, download receipt | P1 | US-16 |
+| **G-13** | Payment Processing | Refund processing | Full refund, partial refund, status updates | P2 | US-17 |
+| **G-14** | Notification System | Email notifications | Send rules, templates, delivery status | P1 | US-18 |
+| **G-15** | Notification System | SMS notifications | Provider rules, opt-in, delivery status | P2 | US-19 |
+| **G-16** | Notification System | Push notifications | Device tokens, send rules, delivery status | P2 | US-20 |
+| **G-17** | Notification System | In-app notification center | Display, mark as read, history | P1 | US-21 |
+| **G-18** | Notification System | Notification preferences | Channel toggles, frequency | P1 | US-22 |
+| **G-19** | File Upload | File upload | File selector, drag-drop, type/size validation, progress bar, preview, delete | P0 | US-23, US-24 |
+| **G-20** | File Upload | Multiple file upload | Bulk upload queue, concurrency rules | P1 | US-25 |
+| **G-21** | User Profile | Profile management | View profile, edit basic info, upload picture | P0 | US-26 |
+| **G-22** | User Profile | Change password | Current password check, update flow | P1 | US-27 |
+| **G-23** | User Profile | Update email | Verification, confirmation flow | P1 | US-28 |
+| **G-24** | User Profile | Delete account | Confirmation, data handling notice | P1 | US-29 |
+| **G-25** | User Profile | Activity log | Events list, filters | P2 | US-30 |
+| **G-26** | Merchant List | Merchant list | Display cards/table, basic pagination | P0 | US-31 |
+| **G-27** | Merchant List | Filtering system | Filters, clear filters | P1 | US-32 |
+| **G-28** | Merchant List | Advanced pagination | Jump to page, page size | P2 | US-33 |
+| **G-29** | Merchant List | Export merchants data | CSV export | P2 | US-34 |
 -->
 
 ---

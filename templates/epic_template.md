@@ -178,22 +178,24 @@ Epic naming pattern: epic-NNN-[phase/component]-[focus].md
 
 ---
 
-## 3. Key User Stories (The "What")
-*Link to individual PRDs or list high-level stories.*
+## 3. User Story Groups (By Domain/Feature)
+*Capture story clusters for this epic. Link to PRDs or individual stories as needed.*
 
-| ID | User Story | Priority | Related PRD |
-| :--- | :--- | :--- | :--- |
-| [STORY_ID_1] | As a [PERSONA], I want to [ACTION], so that [BENEFIT]. | [PRIORITY_1] | [PRD_LINK_1] |
-| [STORY_ID_2] | As a [PERSONA], I want to [ACTION], so that [BENEFIT]. | [PRIORITY_2] | [PRD_LINK_2] |
-| [STORY_ID_3] | As a [PERSONA], I want to [ACTION], so that [BENEFIT]. | [PRIORITY_3] | [PRD_LINK_3] |
+**Merge when**: CRUD for the same entity, similar UI interactions, tightly coupled features.  
+**Separate when**: Different business logic, distinct user flows, can be delivered independently.
+
+| Group ID | Domain | Feature Group | Includes | Priority | Related PRD |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [GROUP_ID_1] | [DOMAIN_1] | [FEATURE_GROUP_1] | [INCLUDES_1] | [PRIORITY_1] | [PRD_LINK_1] |
+| [GROUP_ID_2] | [DOMAIN_2] | [FEATURE_GROUP_2] | [INCLUDES_2] | [PRIORITY_2] | [PRD_LINK_2] |
+| [GROUP_ID_3] | [DOMAIN_3] | [FEATURE_GROUP_3] | [INCLUDES_3] | [PRIORITY_3] | [PRD_LINK_3] |
 
 <!-- Example:
-| ID | User Story | Priority | Related PRD |
-| :--- | :--- | :--- | :--- |
-| US-001 | As a new user, I want to sign up with one click using Google, so I can get started fast. | P0 | prd-social-login.md |
-| US-002 | As a new user, I want to see a progress indicator, so I know how far along I am in setup. | P0 | prd-onboarding-flow.md |
-| US-003 | As a PM, I want to track drop-off at each onboarding step, so I can optimize the funnel. | P1 | prd-analytics.md |
-| US-004 | As a new user, I want contextual help tips, so I understand what to do next. | P1 | prd-onboarding-flow.md |
+| Group ID | Domain | Feature Group | Includes | Priority | Related PRD |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| G-01 | Product Search | Search with autocomplete | Input, autocomplete, results, no results state | P0 | prd-search.md |
+| G-02 | Shopping Cart | Cart management | Add/remove item, update quantity, totals | P0 | prd-cart.md |
+| G-03 | Payment Processing | Payment transaction | Card form, validation, confirmation, error handling | P0 | prd-payments.md |
 -->
 
 ---

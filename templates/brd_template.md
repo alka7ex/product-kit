@@ -130,6 +130,28 @@
 
 ---
 
+## 3.4 User Story Grouping (By Domain/Feature)
+*How we will break down stories for planning and execution.*
+
+**Merge when**:
+-   CRUD operations for the same entity belong together
+-   Similar UI interactions share the same flow
+-   Features are tightly coupled and ship as one capability
+
+**Separate when**:
+-   Business logic is materially different
+-   User flows are distinct
+-   Features can be delivered independently
+
+### Example Grouping
+| Domain | Feature Group | Includes |
+| :--- | :--- | :--- |
+| Product Search | Search with autocomplete | Input field, autocomplete dropdown, search results, no results state |
+| Shopping Cart | Cart management | Add item, remove item, update quantity, display total, empty cart |
+| User Registration | Registration | Email/password form, validation, password strength, email verification, terms checkbox, success/error states |
+
+---
+
 ## 4. High-Level Requirements
 
 ### 4.1 Functional Requirements
