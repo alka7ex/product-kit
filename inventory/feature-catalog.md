@@ -174,7 +174,7 @@ Task Management
 -   **Deprecated On**: 2025-09-01
 -   **Reason**: Poor mobile experience, difficult to maintain
 -   **Migration Path**: Users automatically migrated to New Editor. Old data compatible.
--   **Sunset Date**: 2026-03-01 (all API endpoints will be removed)
+-   **Sunset Date**: 2026-03-01 (all legacy interfaces will be removed)
 -->
 
 ---

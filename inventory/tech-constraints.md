@@ -210,7 +210,7 @@ This document catalogs all known technical limitations, platform constraints, an
 
 <!-- Example:
 ### Data Encryption
--   **At Rest**: AES-256 (database-level encryption)
+-   **At Rest**: AES-256 (storage-layer encryption)
 -   **In Transit**: TLS 1.3
 -   **Limitations**: Cannot perform full-text search on encrypted fields; requires decryption first
 -->
@@ -268,7 +268,7 @@ This document catalogs all known technical limitations, platform constraints, an
 -   **[FUTURE_CONSTRAINT_2]**: [DESCRIPTION]
 
 <!-- Example:
--   **Database Scaling**: Current single-instance Postgres will hit limits at ~100k active workspaces (estimated Q3 2026). Need sharding strategy.
+-   **Data Store Scaling**: Current single-instance Postgres will hit limits at ~100k active workspaces (estimated Q3 2026). Need sharding strategy.
 -   **CDN Costs**: File serving costs will exceed $10k/month at current growth rate by Q4 2026. Consider CloudFlare R2 migration.
 -->
 

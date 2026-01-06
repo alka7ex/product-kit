@@ -78,36 +78,36 @@ erDiagram
 
 ### [ENTITY_1_ICON] [ENTITY_1_NAME]
 <!-- Example: 👤 User -->
--   **Source of Truth**: `[TABLE_NAME]` table
+-   **Source of Truth**: [SYSTEM_OF_RECORD]
 -   **Key Constraints**: [CONSTRAINT_DESCRIPTION]
 -   **Relationships**: [RELATIONSHIP_SUMMARY]
 
 <!-- Example:
--   **Source of Truth**: `users` table.
+-   **Source of Truth**: User directory service.
 -   **Key Constraints**: Email must be unique. Password must be hashed using bcrypt.
 -   **Relationships**: Can belong to multiple Workspaces via Membership
 -->
 
 ### [ENTITY_2_ICON] [ENTITY_2_NAME]
 <!-- Example: 🏢 Workspace -->
--   **Source of Truth**: `[TABLE_NAME]` table
+-   **Source of Truth**: [SYSTEM_OF_RECORD]
 -   **Key Constraints**: [CONSTRAINT_DESCRIPTION]
 -   **Relationships**: [RELATIONSHIP_SUMMARY]
 
 <!-- Example:
--   **Source of Truth**: `workspaces` table.
+-   **Source of Truth**: Workspace service.
 -   **Key Constraints**: `plan_type` defaults to "free". Name must be unique per user.
 -   **Relationships**: Has many Projects, has many Users via Membership
 -->
 
 ### [ENTITY_3_ICON] [ENTITY_3_NAME]
 <!-- Example: 📋 Task -->
--   **Source of Truth**: `[TABLE_NAME]` table
+-   **Source of Truth**: [SYSTEM_OF_RECORD]
 -   **Key Constraints**: [CONSTRAINT_DESCRIPTION]
 -   **Relationships**: [RELATIONSHIP_SUMMARY]
 
 <!-- Example:
--   **Source of Truth**: `tasks` table.
+-   **Source of Truth**: Task service.
 -   **Key Constraints**: `status` enum (`todo`, `in_progress`, `done`). Must belong to a Project.
 -   **Relationships**: Belongs to Project, has many Comments, assigned to User
 -->
@@ -132,7 +132,7 @@ erDiagram
 
 <!-- Example:
 -   **Projects**: Inactive for > 1 year are moved to cold storage (S3 Glacier).
--   **Logs**: Archived after 6 months to reduce database size.
+-   **Logs**: Archived after 6 months to reduce storage footprint.
 -->
 
 ### Backup & Recovery
@@ -160,27 +160,6 @@ erDiagram
 -   **Title**: Max 140 characters, required
 -   **Due Date**: Cannot be in the past (validated at creation)
 -   **Assignee**: Must be a member of the parent workspace
--->
-
----
-
-## 5. Schema Migration Notes
-*Important changes to be aware of when planning new features.*
-
-### Recent Changes
--   **[DATE]**: [MIGRATION_DESCRIPTION]
--   **[DATE]**: [MIGRATION_DESCRIPTION]
-
-<!-- Example:
--   **2025-12-15**: Added `archived_at` column to Projects table for soft deletion
--   **2025-11-20**: Split `permissions` JSONB into separate `roles` table for performance
--->
-
-### Planned Changes
--   **[PLANNED_DATE]**: [PLANNED_CHANGE]
-
-<!-- Example:
--   **Q2 2026**: Move from UUID to ULID for better time-based sorting
 -->
 
 ---

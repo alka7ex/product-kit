@@ -82,7 +82,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | Checkout Conversion Rate | 2.5% | 3.0% | 3 months post-launch | Google Analytics funnel |
 | Digital Wallet Usage | 0% | 20% | 6 months post-launch | Payment processor dashboard |
-| Avg Order Value | $50 | $55 | 6 months post-launch | SQL query on transactions table |
+| Avg Order Value | $50 | $55 | 6 months post-launch | BI dashboard report |
 -->
 
 ---
@@ -203,7 +203,7 @@
 <!-- Example:
 | Risk | Probability | Impact | Mitigation Strategy | Owner |
 | :--- | :--- | :--- | :--- | :--- |
-| API Downtime | Low | High | Implement circuit breaker and fallback to credit card. Monitor uptime. | Engineering |
+| Payment provider downtime | Low | High | Implement fallback to credit card. Monitor uptime. | Engineering |
 | Low Adoption | Medium | Medium | Offer 5% discount for first digital wallet purchase. A/B test messaging. | Product |
 | Fraud Increase | Low | High | Implement additional fraud detection for digital wallet transactions. | Security Team |
 -->

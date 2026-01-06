@@ -156,24 +156,24 @@ Epic naming pattern: epic-NNN-[phase/component]-[focus].md
 -   [ ] [PHASE_2_ITEM_1]
 -   [ ] [PHASE_2_ITEM_2]
 
-**Phase 3: Polish & Testing (Week 3-4)**
+**Phase 3: Polish & Readiness (Week 3-4)**
 -   [ ] [PHASE_3_ITEM_1]
 -   [ ] [PHASE_3_ITEM_2]
 
 <!-- Example:
 **Phase 1: Foundation (Week 1-2)**
--   [ ] Stripe API integration setup
--   [ ] Payment model and database schema
+-   [ ] Stripe integration setup
+-   [ ] Payment workflow requirements
 
 **Phase 2: Core Features (Week 2-3)**
 -   [ ] Payment processing endpoint
 -   [ ] Webhook handling
 -   [ ] Transaction logging
 
-**Phase 3: Polish & Testing (Week 3-4)**
+**Phase 3: Polish & Readiness (Week 3-4)**
 -   [ ] Error handling and retry logic
--   [ ] Load testing
--   [ ] Security audit
+-   [ ] Security review
+-   [ ] Release readiness checklist
 -->
 
 ---
@@ -235,10 +235,9 @@ Epic naming pattern: epic-NNN-[phase/component]-[focus].md
 -   [ ] [SUCCESS_CRITERIA_4]
 
 <!-- Example:
--   [ ] Successfully process 100 test transactions with 0 failures
+-   [ ] Successfully process 100 transactions with 0 failures
 -   [ ] Payment processing time consistently under 3 seconds (p95)
 -   [ ] All critical security requirements met (PCI compliance basics)
--   [ ] 95% unit test coverage for payment processing code
 -   [ ] Documentation complete for integration
 -->
 
@@ -258,7 +257,7 @@ Epic naming pattern: epic-NNN-[phase/component]-[focus].md
 | Dependency | Type | Owner | Status | Impact if Delayed | Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Stripe account setup & API keys | External | Finance Team | ✅ Complete | Blocker | Account created, keys in vault |
-| Payment data model design | Technical | Data Team | 🟡 In Progress | High - blocks dev | Review scheduled Jan 10 |
+| Data requirements design | Technical | Data Team | 🟡 In Progress | High - blocks dev | Review scheduled Jan 10 |
 | PCI compliance review | Legal | Compliance | ⚪ Not Started | Medium - can launch internal beta | Required before public launch |
 
 Types: Technical, External Team, Data/Research, Design, Legal/Compliance, Previous Epic
@@ -289,7 +288,7 @@ Types: Technical, External Team, Data/Research, Design, Legal/Compliance, Previo
 | Risk | Impact | Probability | Mitigation | Owner |
 | :--- | :--- | :--- | :--- | :--- |
 | Stripe API changes during development | High | Low | Monitor Stripe API changelog; use stable API version | Engineering Lead |
-| Payment processing time exceeds 3s target | Medium | Medium | Load test early; optimize database queries; use caching | Engineering Lead |
+| Payment processing time exceeds 3s target | Medium | Medium | Optimize data queries; use caching | Engineering Lead |
 | Scope creep from stakeholders requesting additional payment methods | Medium | High | Clearly document Epic 1 scope; defer to Epic 2; PM to manage expectations | Product Owner |
 -->
 
@@ -326,7 +325,7 @@ Types: Technical, External Team, Data/Research, Design, Legal/Compliance, Previo
 | **Product Owner** | Sarah Chen | Overall Epic success, requirements, prioritization |
 | **Engineering Lead** | David Kumar | Technical architecture, team coordination |
 | **Design Lead** | Emily Wong | UX flows, visual design, user testing |
-| **QA Lead** | Michael Brown | Test strategy, quality gates |
+| **QA Lead** | Michael Brown | Quality planning, release readiness |
 -->
 
 ### 6.2 Stakeholders
@@ -374,7 +373,7 @@ Types: Technical, External Team, Data/Research, Design, Legal/Compliance, Previo
 <!-- Example:
 -   **Engineering**: 3 FTE for 4 weeks (backend focus)
 -   **Design**: 0.5 FTE for 1 week (basic UI for payment status)
--   **QA**: 1 FTE for 2 weeks (integration & security testing)
+-   **QA**: 1 FTE for 2 weeks (quality review and release readiness)
 -->
 
 ### 8.2 External Costs (for this epic only)
@@ -382,9 +381,8 @@ Types: Technical, External Team, Data/Research, Design, Legal/Compliance, Previo
 -   [COST_2]
 
 <!-- Example:
--   Stripe sandbox testing: $0 (free tier)
+-   Stripe sandbox environment: $0 (free tier)
 -   Security audit consultation: $2,000
--   Load testing tools: $200
 -->
 
 ---

@@ -223,33 +223,7 @@ ______________________________________________________________
 ## 5. Technical Specifications
 *To be filled/validated by Engineering.*
 
-### 5.1 API Endpoints
-
-| Endpoint | Method | Description | Request | Response |
-| :--- | :--- | :--- | :--- | :--- |
-| [ENDPOINT_1] | [METHOD_1] | [DESCRIPTION_1] | [REQUEST_1] | [RESPONSE_1] |
-| [ENDPOINT_2] | [METHOD_2] | [DESCRIPTION_2] | [REQUEST_2] | [RESPONSE_2] |
-
-<!-- Example:
-| Endpoint | Method | Description | Request | Response |
-| :--- | :--- | :--- | :--- | :--- |
-| `/api/v1/analytics/summary` | GET | Fetch dashboard metrics | `?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD` | `{ metrics: {...}, charts: [...] }` |
-| `/api/v1/analytics/export` | POST | Export dashboard as PDF | `{ format: "pdf", filters: {...} }` | Binary PDF file |
--->
-
-### 5.2 Database Changes
-
--   [DB_CHANGE_1]
--   [DB_CHANGE_2]
--   [DB_CHANGE_3]
-
-<!-- Example:
--   Add index on `events` table for `timestamp` column (improve query performance)
--   Create new `dashboard_views` table to store saved user views
--   Add `last_viewed_at` column to `dashboards` table for tracking usage
--->
-
-### 5.3 Performance Requirements
+### 5.1 Performance Requirements
 
 -   [PERFORMANCE_REQ_1]
 -   [PERFORMANCE_REQ_2]
@@ -263,7 +237,7 @@ ______________________________________________________________
 -   Support 100 concurrent users without degradation
 -->
 
-### 5.4 Security & Privacy
+### 5.2 Security & Privacy
 
 -   [SECURITY_REQ_1]
 -   [SECURITY_REQ_2]
@@ -271,13 +245,13 @@ ______________________________________________________________
 
 <!-- Example:
 -   Ensure user can only see data for their own organization (tenant isolation)
--   API endpoints must require authentication (JWT token)
+-   All access must require authentication (JWT token or SSO)
 -   Rate limit: 100 requests per minute per user
 -   PII data (if any) must be anonymized in exports
 -   Audit log for all dashboard view/export actions
 -->
 
-### 5.5 Dependencies
+### 5.3 Dependencies
 
 -   [DEPENDENCY_1]
 -   [DEPENDENCY_2]
@@ -373,7 +347,7 @@ ______________________________________________________________
 ### 8.3 Rollback Plan
 [ROLLBACK_PLAN]
 
-<!-- Example: "Feature flag can disable dashboard instantly. Fallback to 'Export to CSV' link if dashboard fails to load. Database migrations are reversible." -->
+<!-- Example: "Feature flag can disable dashboard instantly. Fallback to 'Export to CSV' link if dashboard fails to load. Provide an alternate workflow in help docs." -->
 
 ---
 

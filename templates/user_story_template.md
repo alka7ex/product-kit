@@ -10,7 +10,7 @@ Examples:
   requirements/042-user-dashboard/stories/us-001-view-key-metrics.md
 
 Why User Stories?
-- Breaks down PRD/Epic into small, testable increments
+- Breaks down PRD/Epic into small, deliverable increments
 - Focuses on user value and outcomes (not just features)
 - Provides clear acceptance criteria for development
 - Enables better estimation and sprint planning
@@ -20,7 +20,7 @@ When to create User Stories:
 ✅ After PRD is approved and Epic is defined
 ✅ During sprint planning to break down Epic work
 ✅ When acceptance criteria needs to be crystal clear
-✅ For tracking individual dev tasks and testing
+✅ For tracking individual dev tasks
 
 Story naming pattern: us-NNN-[action]-[object].md
 -->
@@ -162,34 +162,6 @@ Users complete signup → See pricing page → Enter credit card details → Cli
 
 ## Technical Notes
 
-### API Endpoints
-*What APIs are involved?*
-
-- [ENDPOINT_1]: [PURPOSE_1]
-- [ENDPOINT_2]: [PURPOSE_2]
-
-<!-- Example:
-- `POST /api/v1/payments` - Process payment transaction
-- `GET /api/v1/payments/{id}` - Retrieve payment status
-- `POST /api/v1/webhooks/stripe` - Handle Stripe webhooks
--->
-
-### Data Model
-*What data needs to be stored or retrieved?*
-
-[DATA_MODEL_DESCRIPTION]
-
-<!-- Example:
-Payment record must include:
-- transaction_id (unique, indexed)
-- user_id (foreign key)
-- amount, currency
-- status (pending/success/failed)
-- payment_method (last 4 digits, type)
-- created_at, updated_at
-- stripe_payment_intent_id
--->
-
 ### Dependencies
 *What technical dependencies does this story have?*
 
@@ -198,7 +170,7 @@ Payment record must include:
 
 <!-- Example:
 - Stripe SDK integration completed
-- Payment database schema created and migrated
+- Payment workflow requirements approved
 - User authentication system functional
 - Email service configured for confirmations
 -->
@@ -266,43 +238,15 @@ Payment record must include:
 
 ---
 
-## Test Cases
-
-### Manual Test Scenarios
-
-| Test Case | Steps | Expected Result | Status |
-| :--- | :--- | :--- | :--- |
-| [TEST_CASE_1] | [STEPS_1] | [EXPECTED_1] | [STATUS_1] |
-| [TEST_CASE_2] | [STEPS_2] | [EXPECTED_2] | [STATUS_2] |
-
-<!-- Example:
-| Test Case | Steps | Expected Result | Status |
-| :--- | :--- | :--- | :--- |
-| Happy path - valid card | 1. Enter test card 4242 4242 4242 4242<br>2. Enter future expiry<br>3. Enter any 3-digit CVV<br>4. Click "Pay Now" | Payment succeeds, account upgraded, email sent | ⚪ Not Tested |
-| Declined card | 1. Enter test card 4000 0000 0000 0002<br>2. Complete form<br>3. Click "Pay Now" | Error message: "Card declined", no charge made | ⚪ Not Tested |
-| Network timeout | 1. Throttle network to 2G<br>2. Submit payment<br>3. Wait 30 seconds | Loading indicator shows, timeout handled gracefully | ⚪ Not Tested |
--->
-
-### Automated Test Requirements
-
-- [ ] Unit tests for payment processing logic
-- [ ] Integration tests with Stripe test mode
-- [ ] E2E test for complete payment flow
-- [ ] Error handling tests for edge cases
-
----
-
 ## Definition of Ready
 
 *Checklist before development can start:*
 
 - [ ] Story is sized and pointed (story points assigned)
-- [ ] Acceptance criteria are clear and testable
+- [ ] Acceptance criteria are clear and measurable
 - [ ] Design mockups approved (if UI changes)
 - [ ] Technical dependencies identified and available
-- [ ] API contracts defined (if new endpoints)
 - [ ] Security requirements reviewed
-- [ ] Test data/environment available
 
 ---
 
@@ -312,11 +256,8 @@ Payment record must include:
 
 - [ ] All acceptance criteria met and verified
 - [ ] Code reviewed and approved
-- [ ] Unit tests written and passing (>80% coverage)
-- [ ] Integration tests passing
-- [ ] Manual QA testing completed
 - [ ] Security review completed (if applicable)
-- [ ] Documentation updated (API docs, user docs)
+- [ ] Documentation updated (user docs, release notes)
 - [ ] Deployed to staging environment
 - [ ] Product Owner sign-off received
 
