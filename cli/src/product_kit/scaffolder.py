@@ -85,6 +85,58 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     console.print(tree)
 
 
+def update_project(target_dir: Path, config: Dict[str, Any], console: Console) -> None:
+    """
+    Update an existing Product Kit project with latest templates and AI configs.
+    
+    Args:
+        target_dir: Existing project directory
+        config: Configuration dictionary from prompts
+        console: Rich console for output
+    """
+    tree = Tree("├── [cyan]●[/cyan] Initialize update")
+    
+    # Get the data directory (either from package or development)
+    package_dir = Path(__file__).parent  # /product-kit/cli/src/product_kit
+    data_dir = package_dir / "data"
+    
+    # If data dir doesn't exist (development mode), use root directory
+    if not data_dir.exists():
+        root_dir = package_dir.parent.parent.parent  # /product-kit
+    else:
+        root_dir = data_dir
+    
+    # Verify we have the necessary files
+    if not (root_dir / "agents").exists():
+        raise FileNotFoundError(
+            f"Cannot find product-kit data. "
+            f"Expected agents/ folder at {root_dir}"
+        )
+    
+    ai_assistant = config.get("ai_assistant", "copilot")
+    tree.add("[cyan]●[/cyan] Select AI assistant ([green]" + ai_assistant + "[/green])")
+    console.print(tree)
+    
+    step_templates = tree.add("[cyan]●[/cyan] Update templates")
+    update_templates(root_dir, target_dir, step_templates)
+    console.print(tree)
+    
+    step_agents = tree.add("[cyan]●[/cyan] Update AI agent configurations")
+    copy_ai_agents(root_dir, target_dir, config, step_agents)
+    console.print(tree)
+    
+    step_instructions = tree.add("[cyan]●[/cyan] Update AI instruction files")
+    update_ai_instructions(root_dir, target_dir, ai_assistant, step_instructions)
+    console.print(tree)
+    
+    step_editor = tree.add("[cyan]●[/cyan] Update editor configuration")
+    create_editor_config(target_dir, config)
+    console.print(tree)
+    
+    tree.add("[cyan]●[/cyan] Finalize (update complete)")
+    console.print(tree)
+
+
 def build_replacements(config: Dict[str, Any]) -> Dict[str, str]:
     """Build replacement dictionary from config."""
     # Extract persona name parts
@@ -198,6 +250,56 @@ def copy_template_files(
             count += 1
     
     tree_node.label = f"[cyan]●[/cyan] Copy template files ([green]{count} files[/green])"
+    return count
+
+
+def update_templates(root_dir: Path, target_dir: Path, tree_node: Tree) -> int:
+    """Update template files without touching context or inventory."""
+    templates_src = root_dir / "templates"
+    templates_dest = target_dir / "templates"
+    
+    if not templates_src.exists():
+        tree_node.label = "[cyan]●[/cyan] Update templates ([green]0 files[/green])"
+        return 0
+    
+    templates_dest.mkdir(parents=True, exist_ok=True)
+    count = 0
+    for template_file in templates_src.glob("*.md"):
+        dest_file = templates_dest / template_file.name
+        shutil.copy2(template_file, dest_file)
+        count += 1
+    
+    tree_node.label = f"[cyan]●[/cyan] Update templates ([green]{count} files[/green])"
+    return count
+
+
+def update_ai_instructions(
+    root_dir: Path,
+    target_dir: Path,
+    ai_assistant: str,
+    tree_node: Tree,
+) -> int:
+    """Update AI instruction files for the selected assistant."""
+    count = 0
+    if ai_assistant == "copilot":
+        src_file = root_dir / ".ai-providers" / "copilot-instructions.md"
+        dest_file = target_dir / ".github" / "copilot-instructions.md"
+    elif ai_assistant == "claude":
+        src_file = root_dir / ".ai-providers" / "CLAUDE.md"
+        dest_file = target_dir / "CLAUDE.md"
+    elif ai_assistant == "gemini":
+        src_file = root_dir / ".ai-providers" / "GEMINI.md"
+        dest_file = target_dir / "GEMINI.md"
+    else:
+        tree_node.label = "[cyan]●[/cyan] Update AI instruction files ([green]0 files[/green])"
+        return 0
+    
+    if src_file.exists():
+        dest_file.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src_file, dest_file)
+        count = 1
+    
+    tree_node.label = f"[cyan]●[/cyan] Update AI instruction files ([green]{count} files[/green])"
     return count
 
 
