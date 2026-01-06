@@ -125,13 +125,20 @@ def main(
     console.print()
 
     # Show next steps
-    ai_name = config.get("ai_assistant", "copilot").title()
+    ai_assistant = config.get("ai_assistant", "copilot")
+    ai_name = ai_assistant.title()
     ai_file_map = {
         "copilot": ".github/copilot-instructions.md",
         "claude": "CLAUDE.md",
         "gemini": "GEMINI.md",
+        "codex": ".codex/skills",
     }
-    ai_file = ai_file_map.get(config.get("ai_assistant"), "AI_INSTRUCTIONS.md")
+    ai_file = ai_file_map.get(ai_assistant, "AI_INSTRUCTIONS.md")
+    ai_instruction_line = (
+        f"4. Review [yellow]{ai_file}[/yellow] for AI assistant integration\n"
+        if ai_assistant != "codex"
+        else "4. Review [yellow].codex/skills[/yellow] and [yellow].codex/prompts[/yellow] for Codex commands\n"
+    )
 
     console.print(
         Panel(
@@ -139,7 +146,7 @@ def main(
             + (f"1. cd {project_name}\n" if project_name else "1. You're already in the project directory!\n")
             + f"2. git init (if not already initialized)\n"
             f"3. code . (open in VS Code)\n"
-            f"4. Review [yellow]{ai_file}[/yellow] for AI assistant integration\n"
+            f"{ai_instruction_line}"
             f"5. Review [yellow]constitution.md[/yellow] and customize your standards\n"
             f"6. Fill out [yellow]context/[/yellow] files with your product details\n"
             f"7. Document current state in [yellow]inventory/[/yellow]\n"
@@ -150,6 +157,7 @@ def main(
     )
     console.print()
 
+    command_label = "Skills" if ai_assistant == "codex" else "Commands"
     console.print(
         Panel(
             f"[bold]Start using slash commands with {ai_name}:[/bold]\n\n"
@@ -160,7 +168,7 @@ def main(
             f"  /productkit.constitution - Review & update standards\n"
             f"  /productkit.update-context - Update product context\n"
             f"  /productkit.update-inventory - Update system inventory",
-            title=f"🤖 {ai_name} Commands",
+            title=f"🤖 {ai_name} {command_label}",
             box=box.ROUNDED,
         )
     )
@@ -183,10 +191,11 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
     console.print("  1. GitHub Copilot (VS Code)")
     console.print("  2. Claude (Claude.ai or Claude Desktop)")
     console.print("  3. Gemini (AI Studio or CLI)")
+    console.print("  4. Codex (CLI or VS Code)")
     
     ai_choice = Prompt.ask(
         "Choose AI assistant",
-        choices=["1", "2", "3"],
+        choices=["1", "2", "3", "4"],
         default="1",
     )
     
@@ -194,6 +203,7 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
         "1": "copilot",
         "2": "claude",
         "3": "gemini",
+        "4": "codex",
     }
     ai_assistant = ai_assistant_map[ai_choice]
     
@@ -251,6 +261,22 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
             "1": "gemini-studio",
             "2": "gemini-cli",
             "3": "gemini-ide",
+        }
+        editor = platform_map[platform_choice]
+    elif ai_assistant == "codex":
+        console.print("[bold]Select Platform:[/bold]")
+        console.print("  1. Codex CLI")
+        console.print("  2. Codex VS Code")
+        
+        platform_choice = Prompt.ask(
+            "Choose platform",
+            choices=["1", "2"],
+            default="1",
+        )
+        
+        platform_map = {
+            "1": "codex-cli",
+            "2": "codex-vscode",
         }
         editor = platform_map[platform_choice]
     else:

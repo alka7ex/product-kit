@@ -257,6 +257,8 @@ def copy_ai_agents(
                 dest_file = github_prompts / prompt_file.name
                 shutil.copy2(prompt_file, dest_file)
                 count += 1
+    elif ai_assistant == "codex":
+        count += copy_codex_prompts_and_skills(agents_src, target_dir)
     
     tree_node.label = f"[cyan]●[/cyan] Setup AI agent configurations ([green]{count} files[/green])"
 
@@ -286,6 +288,54 @@ def create_editor_config(target_dir: Path, config: Dict[str, Any]) -> None:
         import json
         settings_file = vscode_dir / "settings.json"
         settings_file.write_text(json.dumps(settings, indent=4))
+
+
+def copy_codex_prompts_and_skills(agents_src: Path, target_dir: Path) -> int:
+    """Create Codex prompts and skills from agent files."""
+    if not agents_src.exists():
+        return 0
+    
+    codex_dir = target_dir / ".codex"
+    prompts_dest = codex_dir / "prompts"
+    skills_dest = codex_dir / "skills"
+    prompts_dest.mkdir(parents=True, exist_ok=True)
+    skills_dest.mkdir(parents=True, exist_ok=True)
+    
+    count = 0
+    for agent_file in agents_src.glob("*.agent.md"):
+        prompt_name = agent_file.name.replace(".agent.md", "")
+        prompt_dest = prompts_dest / f"{prompt_name}.md"
+        prompt_dest.write_text(agent_file.read_text(encoding="utf-8"), encoding="utf-8")
+        count += 1
+        
+        skill_dir = skills_dest / prompt_name
+        skill_dir.mkdir(parents=True, exist_ok=True)
+        skill_file = skill_dir / "SKILL.md"
+        skill_file.write_text(build_codex_skill_content(prompt_name), encoding="utf-8")
+        count += 1
+    
+    return count
+
+
+def build_codex_skill_content(prompt_name: str) -> str:
+    """Return a Codex skill definition that routes to a prompt."""
+    description = (
+        f"Use when the user asks to run the {prompt_name} prompt or references "
+        f"{prompt_name} tasks."
+    )
+    return (
+        "---\n"
+        f"name: {prompt_name}\n"
+        f"description: {description}\n"
+        "---\n\n"
+        f"# {prompt_name} Prompt\n\n"
+        "## Purpose\n"
+        f"Route requests to the {prompt_name} prompt in `.codex/prompts/{prompt_name}.md`.\n\n"
+        "## Workflow\n"
+        f"1. Open `.codex/prompts/{prompt_name}.md`.\n"
+        "2. Follow the instructions in that prompt when responding to the user.\n"
+        "3. If the prompt is missing, tell the user the file is not present and ask whether to create it.\n"
+    )
 
 
 def create_gitignore(target_dir: Path, config: Dict[str, Any]) -> None:
