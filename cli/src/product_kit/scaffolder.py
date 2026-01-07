@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 from rich.console import Console
+from rich.prompt import Confirm
 from rich.tree import Tree
 
 
@@ -118,7 +119,15 @@ def update_project(target_dir: Path, config: Dict[str, Any], console: Console) -
     console.print(tree)
     
     step_templates = tree.add("[cyan]●[/cyan] Update templates")
-    update_templates(root_dir, target_dir, step_templates)
+    update_directory_files(root_dir, target_dir, "templates", step_templates)
+    console.print(tree)
+    
+    step_context = tree.add("[cyan]●[/cyan] Update context")
+    update_directory_files(root_dir, target_dir, "context", step_context)
+    console.print(tree)
+    
+    step_inventory = tree.add("[cyan]●[/cyan] Update inventory")
+    update_directory_files(root_dir, target_dir, "inventory", step_inventory)
     console.print(tree)
     
     step_agents = tree.add("[cyan]●[/cyan] Update AI agent configurations")
@@ -210,6 +219,7 @@ def copy_template_files(
         ("context/product-vision.md", "context/product-vision.md"),
         ("context/personas.md", "context/personas.md"),
         ("context/glossary.md", "context/glossary.md"),
+        ("context/teams.md", "context/teams.md"),
         ("context/market_research.md", "context/market_research.md"),
         ("inventory/feature-catalog.md", "inventory/feature-catalog.md"),
         ("inventory/tech-constraints.md", "inventory/tech-constraints.md"),
@@ -253,23 +263,40 @@ def copy_template_files(
     return count
 
 
-def update_templates(root_dir: Path, target_dir: Path, tree_node: Tree) -> int:
-    """Update template files without touching context or inventory."""
-    templates_src = root_dir / "templates"
-    templates_dest = target_dir / "templates"
+def update_directory_files(
+    root_dir: Path,
+    target_dir: Path,
+    subdir: str,
+    tree_node: Tree,
+) -> int:
+    """Update files in a directory, prompting before adding or replacing."""
+    src_dir = root_dir / subdir
+    dest_dir = target_dir / subdir
     
-    if not templates_src.exists():
-        tree_node.label = "[cyan]●[/cyan] Update templates ([green]0 files[/green])"
+    if not src_dir.exists():
+        tree_node.label = f"[cyan]●[/cyan] Update {subdir} ([green]0 files[/green])"
         return 0
     
-    templates_dest.mkdir(parents=True, exist_ok=True)
+    dest_dir.mkdir(parents=True, exist_ok=True)
     count = 0
-    for template_file in templates_src.glob("*.md"):
-        dest_file = templates_dest / template_file.name
-        shutil.copy2(template_file, dest_file)
-        count += 1
+    for src_file in src_dir.glob("*.md"):
+        dest_file = dest_dir / src_file.name
+        if not dest_file.exists():
+            if Confirm.ask(f"Add new {subdir}/{src_file.name}?", default=True):
+                shutil.copy2(src_file, dest_file)
+                count += 1
+            continue
+        
+        src_content = src_file.read_text(encoding="utf-8")
+        dest_content = dest_file.read_text(encoding="utf-8")
+        if src_content == dest_content:
+            continue
+        
+        if Confirm.ask(f"Update {subdir}/{src_file.name} with latest template?", default=True):
+            shutil.copy2(src_file, dest_file)
+            count += 1
     
-    tree_node.label = f"[cyan]●[/cyan] Update templates ([green]{count} files[/green])"
+    tree_node.label = f"[cyan]●[/cyan] Update {subdir} ([green]{count} files[/green])"
     return count
 
 

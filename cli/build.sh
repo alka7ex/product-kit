@@ -10,6 +10,7 @@ echo "Building product-kit..."
 
 # Copy data files temporarily
 echo "Copying data files..."
+rm -rf src/product_kit/data
 mkdir -p src/product_kit/data
 cp -r ../agents src/product_kit/data/
 cp -r ../prompts src/product_kit/data/
@@ -18,6 +19,8 @@ cp -r ../context src/product_kit/data/
 cp -r ../inventory src/product_kit/data/
 cp -r ../templates src/product_kit/data/
 cp ../constitution.md src/product_kit/data/
+echo "Data files copied:"
+ls -1 src/product_kit/data
 
 # Clean previous builds
 echo "Cleaning previous builds..."
