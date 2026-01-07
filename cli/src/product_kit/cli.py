@@ -160,6 +160,7 @@ def init(
             f"  /productkit.brd - Create Business Requirements\n"
             f"  /productkit.prd - Create Product Requirements\n"
             f"  /productkit.epic - Plan large initiatives\n"
+            f"  /productkit.timeline - Build implementation timeline\n"
             f"  /productkit.constitution - Review & update standards\n"
             f"  /productkit.update-context - Update product context\n"
             f"  /productkit.update-inventory - Update system inventory",

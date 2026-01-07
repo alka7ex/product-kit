@@ -228,6 +228,7 @@ def copy_template_files(
         ("templates/brd_template.md", "templates/brd_template.md"),
         ("templates/prd_template.md", "templates/prd_template.md"),
         ("templates/epic_template.md", "templates/epic_template.md"),
+        ("templates/timeline_template.md", "templates/timeline_template.md"),
     ]
     
     ai_assistant = config.get("ai_assistant", "copilot")
@@ -410,6 +411,7 @@ def create_editor_config(target_dir: Path, config: Dict[str, Any]) -> None:
                 "productkit.brd": True,
                 "productkit.prd": True,
                 "productkit.epic": True,
+                "productkit.timeline": True,
                 "productkit.constitution": True,
                 "productkit.update-context": True,
                 "productkit.update-inventory": True
