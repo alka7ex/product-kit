@@ -17,13 +17,19 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Install Product Kit
 uv tool install product-kit
 
+# Check installed version
+prod --version
+
 # Create a new project
 prod my-product
 ```
 
+
 You'll be guided through an interactive setup to configure:
+
 - Product name and vision
-- AI assistant choice (Copilot, Claude, or Gemini)
+- AI assistant choice (Copilot, Claude, Gemini, Codex, or opencode)
+
 - Strategic pillars and personas
 - Template preferences
 
@@ -75,7 +81,10 @@ product-kit/
 │       ├── productkit.brd.agent.md             # Create Business Requirements Document
 │       ├── productkit.prd.agent.md             # Create Product Requirements Document
 │       └── productkit.epic.agent.md            # Create Epic planning document
+├── .opencode/               # opencode command definitions
+│   └── command/             # Product Kit commands for opencode
 ├── context/                 # External knowledge: Product Vision, Personas, Market Research, Glossary.
+
 │   ├── glossary.md          # Terminology and definitions.
 │   ├── market_research.md   # Market analysis and competitive landscape.
 │   ├── personas.md          # User personas and target audience profiles.
@@ -209,7 +218,8 @@ For existing products, Copilot needs to know what is already built.
 
 ## 🤖 AI Instructions Reference
 
-Product Kit includes AI instructions that work with GitHub Copilot, Claude, Gemini, and other AI assistants. These instructions automatically load context and validate requirements:
+Product Kit includes AI instructions that work with GitHub Copilot, Claude, Gemini, Codex, opencode, and other AI assistants. These instructions automatically load context and validate requirements:
+
 
 ### Available Instructions
 

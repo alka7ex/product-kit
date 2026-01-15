@@ -12,6 +12,8 @@ from rich.align import Align
 from rich import box
 
 from .scaffolder import scaffold_project, update_project
+from . import __version__
+
 
 app = typer.Typer(
     name="prod",
@@ -20,7 +22,24 @@ app = typer.Typer(
 )
 console = Console()
 
+
+@app.callback(invoke_without_command=True)
+def main(
+    version: bool = typer.Option(
+        False,
+        "--version",
+        help="Show version and exit",
+        is_eager=True,
+    ),
+) -> None:
+    """Product Kit CLI entrypoint."""
+    if version:
+        console.print(__version__)
+        raise typer.Exit()
+
+
 BANNER = """
+
 ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗    ██╗  ██╗██╗████████╗
 ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝    ██║ ██╔╝██║╚══██╔══╝
 ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║       █████╔╝ ██║   ██║   
@@ -50,7 +69,7 @@ def init(
 ) -> None:
     """
     Scaffold a new Product Kit project with customized templates.
-    
+
     Examples:
         prod init my-product
         prod --no-prompts
@@ -64,13 +83,19 @@ def init(
         default_product_name = project_name.replace("-", " ").replace("_", " ").title()
     else:
         target_dir = Path.cwd()
-        default_product_name = target_dir.name.replace("-", " ").replace("_", " ").title()
+        default_product_name = (
+            target_dir.name.replace("-", " ").replace("_", " ").title()
+        )
 
     # Check if directory exists and has content
     if target_dir.exists() and any(target_dir.iterdir()):
         items_count = len(list(target_dir.iterdir()))
-        console.print(f"[yellow]Warning: Current directory is not empty ({items_count} items)[/yellow]")
-        console.print("[yellow]Template files will be merged with existing content and may overwrite existing files[/yellow]")
+        console.print(
+            f"[yellow]Warning: Current directory is not empty ({items_count} items)[/yellow]"
+        )
+        console.print(
+            "[yellow]Template files will be merged with existing content and may overwrite existing files[/yellow]"
+        )
         if not Confirm.ask("Do you want to continue?", default=False):
             console.print("[red]✖ Cancelled[/red]")
             sys.exit(0)
@@ -96,7 +121,11 @@ def init(
             "north_star_metric": "Weekly Active Users",
             "primary_persona": "The Busy Professional",
             "persona_goal": "Complete tasks efficiently without context switching",
-            "strategic_pillars": ["Growth & Acquisition", "Product Excellence", "Operational Efficiency"],
+            "strategic_pillars": [
+                "Growth & Acquisition",
+                "Product Excellence",
+                "Operational Efficiency",
+            ],
             "ai_assistant": "copilot",
             "editor": "vscode",
             "include_copilot_agents": True,
@@ -108,7 +137,7 @@ def init(
     # Scaffold the project with progress tree
     console.print()
     console.print("[bold cyan]Initialize Product Kit Project[/bold cyan]")
-    
+
     try:
         scaffold_project(target_dir, config, console)
     except Exception as e:
@@ -127,18 +156,28 @@ def init(
         "claude": "CLAUDE.md",
         "gemini": "GEMINI.md",
         "codex": ".codex/skills",
+        "opencode": ".opencode/command",
     }
     ai_file = ai_file_map.get(ai_assistant, "AI_INSTRUCTIONS.md")
-    ai_instruction_line = (
-        f"4. Review [yellow]{ai_file}[/yellow] for AI assistant integration\n"
-        if ai_assistant != "codex"
-        else "4. Review [yellow].codex/skills[/yellow] and [yellow].codex/prompts[/yellow] for Codex commands\n"
-    )
+    if ai_assistant == "codex":
+        ai_instruction_line = "4. Review [yellow].codex/skills[/yellow] and [yellow].codex/prompts[/yellow] for Codex commands\n"
+    elif ai_assistant == "opencode":
+        ai_instruction_line = (
+            "4. Review [yellow].opencode/command[/yellow] for opencode commands\n"
+        )
+    else:
+        ai_instruction_line = (
+            f"4. Review [yellow]{ai_file}[/yellow] for AI assistant integration\n"
+        )
 
     console.print(
         Panel(
             f"[bold]Next Steps[/bold]\n\n"
-            + (f"1. cd {project_name}\n" if project_name else "1. You're already in the project directory!\n")
+            + (
+                f"1. cd {project_name}\n"
+                if project_name
+                else "1. You're already in the project directory!\n"
+            )
             + f"2. git init (if not already initialized)\n"
             f"3. code . (open in VS Code)\n"
             f"{ai_instruction_line}"
@@ -175,33 +214,41 @@ def init(
 def update() -> None:
     """Update templates and AI configs in the current Product Kit project."""
     print_banner()
-    
+
     target_dir = Path.cwd()
     if not is_product_kit_project(target_dir):
-        console.print("[yellow]No Product Kit project detected in the current directory.[/yellow]")
+        console.print(
+            "[yellow]No Product Kit project detected in the current directory.[/yellow]"
+        )
         if Confirm.ask("Do you want to initialize Product Kit here?", default=False):
             init(project_name=None, product_name=None, no_prompts=False)
             return
         console.print("[red]✖ Cancelled[/red]")
         sys.exit(0)
-    
+
     detected = detect_ai_assistants(target_dir)
     ai_assistant = choose_ai_assistant(detected)
-    editor = "vscode" if ai_assistant == "copilot" else "other"
+    if ai_assistant == "copilot":
+        editor = "vscode"
+    elif ai_assistant == "opencode":
+        editor = "opencode"
+    else:
+        editor = "other"
+
     config = {
         "ai_assistant": ai_assistant,
         "editor": editor,
     }
-    
+
     console.print()
     console.print("[bold cyan]Update Product Kit Project[/bold cyan]")
-    
+
     try:
         update_project(target_dir, config, console)
     except Exception as e:
         console.print(f"[red]✖ Error: {e}[/red]")
         sys.exit(1)
-    
+
     console.print()
     console.print("[bold green]Update complete.[/bold green]")
     console.print()
@@ -224,21 +271,24 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
     console.print("  2. Claude (Claude.ai or Claude Desktop)")
     console.print("  3. Gemini (AI Studio or CLI)")
     console.print("  4. Codex (CLI or VS Code)")
-    
+    console.print("  5. opencode")
+
     ai_choice = Prompt.ask(
         "Choose AI assistant",
-        choices=["1", "2", "3", "4"],
+        choices=["1", "2", "3", "4", "5"],
         default="1",
     )
-    
+
     ai_assistant_map = {
         "1": "copilot",
         "2": "claude",
         "3": "gemini",
         "4": "codex",
+        "5": "opencode",
     }
+
     ai_assistant = ai_assistant_map[ai_choice]
-    
+
     # Editor/Platform choice (for additional setup)
     console.print()
     if ai_assistant == "copilot":
@@ -246,13 +296,13 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
         console.print("  1. VS Code")
         console.print("  2. VS Code (web)")
         console.print("  3. Other")
-        
+
         editor_choice = Prompt.ask(
             "Choose editor",
             choices=["1", "2", "3"],
             default="1",
         )
-        
+
         editor_map = {
             "1": "vscode",
             "2": "vscode-web",
@@ -264,13 +314,13 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
         console.print("  1. Claude.ai (web)")
         console.print("  2. Claude Desktop")
         console.print("  3. Claude Code Editor")
-        
+
         platform_choice = Prompt.ask(
             "Choose platform",
             choices=["1", "2", "3"],
             default="1",
         )
-        
+
         platform_map = {
             "1": "claude-web",
             "2": "claude-desktop",
@@ -282,13 +332,13 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
         console.print("  1. Google AI Studio (web)")
         console.print("  2. Gemini API/CLI")
         console.print("  3. IDE Extension")
-        
+
         platform_choice = Prompt.ask(
             "Choose platform",
             choices=["1", "2", "3"],
             default="1",
         )
-        
+
         platform_map = {
             "1": "gemini-studio",
             "2": "gemini-cli",
@@ -299,21 +349,23 @@ def gather_configuration(default_product_name: str, target_dir: Path) -> dict:
         console.print("[bold]Select Platform:[/bold]")
         console.print("  1. Codex CLI")
         console.print("  2. Codex VS Code")
-        
+
         platform_choice = Prompt.ask(
             "Choose platform",
             choices=["1", "2"],
             default="1",
         )
-        
+
         platform_map = {
             "1": "codex-cli",
             "2": "codex-vscode",
         }
         editor = platform_map[platform_choice]
+    elif ai_assistant == "opencode":
+        editor = "opencode"
     else:
         editor = "other"
-    
+
     console.print(f"[green]Selected: {ai_assistant} on {editor}[/green]")
     console.print()
 
@@ -366,7 +418,9 @@ def print_banner() -> None:
     """Render the CLI banner."""
     console.print()
     console.print(Align.center(BANNER, style="bold cyan"))
-    console.print("Requirement-Driven Design Framework", style="bold cyan", justify="center")
+    console.print(
+        "Requirement-Driven Design Framework", style="bold cyan", justify="center"
+    )
     console.print()
 
 
@@ -381,21 +435,29 @@ def is_product_kit_project(target_dir: Path) -> bool:
         target_dir / "prompts",
         target_dir / ".github" / "agents",
         target_dir / ".codex" / "skills",
+        target_dir / ".opencode" / "command",
     ]
+
     return any(marker.exists() for marker in markers)
 
 
 def detect_ai_assistants(target_dir: Path) -> List[str]:
     """Detect which AI assistants are configured in the project."""
     detected: List[str] = []
-    if (target_dir / ".codex" / "skills").exists() or (target_dir / ".codex" / "prompts").exists():
+    if (target_dir / ".codex" / "skills").exists() or (
+        target_dir / ".codex" / "prompts"
+    ).exists():
         detected.append("codex")
-    if (target_dir / ".github" / "agents").exists() or (target_dir / ".github" / "copilot-instructions.md").exists():
+    if (target_dir / ".github" / "agents").exists() or (
+        target_dir / ".github" / "copilot-instructions.md"
+    ).exists():
         detected.append("copilot")
     if (target_dir / "CLAUDE.md").exists():
         detected.append("claude")
     if (target_dir / "GEMINI.md").exists():
         detected.append("gemini")
+    if (target_dir / ".opencode" / "command").exists():
+        detected.append("opencode")
     return detected
 
 
@@ -403,28 +465,31 @@ def choose_ai_assistant(detected: List[str]) -> str:
     """Pick an AI assistant to update, prompting when needed."""
     if len(detected) == 1:
         return detected[0]
-    
+
     if detected:
         console.print(f"[yellow]Detected: {', '.join(detected)}[/yellow]")
-    
+
     console.print("[bold]Select AI Assistant to update:[/bold]")
     console.print("  1. GitHub Copilot (VS Code)")
     console.print("  2. Claude (Claude.ai or Claude Desktop)")
     console.print("  3. Gemini (AI Studio or CLI)")
     console.print("  4. Codex (CLI or VS Code)")
-    
+    console.print("  5. opencode")
+
     ai_assistant_map = {
         "1": "copilot",
         "2": "claude",
         "3": "gemini",
         "4": "codex",
+        "5": "opencode",
     }
+
     default_choice = "1"
     for key, value in ai_assistant_map.items():
         if value in detected:
             default_choice = key
             break
-    
+
     ai_choice = Prompt.ask(
         "Choose AI assistant",
         choices=list(ai_assistant_map.keys()),

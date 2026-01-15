@@ -10,10 +10,12 @@ from rich.prompt import Confirm
 from rich.tree import Tree
 
 
-def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console) -> None:
+def scaffold_project(
+    target_dir: Path, config: Dict[str, Any], console: Console
+) -> None:
     """
     Scaffold a new Product Kit project.
-    
+
     Args:
         target_dir: Target directory for the project
         config: Configuration dictionary from prompts
@@ -21,24 +23,23 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     """
     # Create progress tree
     tree = Tree("├── [cyan]●[/cyan] Initialize directory structure")
-    
+
     # Get the data directory (either from package or development)
     package_dir = Path(__file__).parent  # /product-kit/cli/src/product_kit
     data_dir = package_dir / "data"
-    
+
     # If data dir doesn't exist (development mode), use root directory
     if not data_dir.exists():
         root_dir = package_dir.parent.parent.parent  # /product-kit
     else:
         root_dir = data_dir
-    
+
     # Verify we have the necessary files
     if not (root_dir / "agents").exists():
         raise FileNotFoundError(
-            f"Cannot find product-kit data. "
-            f"Expected agents/ folder at {root_dir}"
+            f"Cannot find product-kit data. Expected agents/ folder at {root_dir}"
         )
-    
+
     # Create directory structure
     target_dir.mkdir(parents=True, exist_ok=True)
     (target_dir / "context").mkdir(exist_ok=True)
@@ -46,7 +47,8 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     (target_dir / "templates").mkdir(exist_ok=True)
     (target_dir / "agents").mkdir(exist_ok=True)
     (target_dir / "prompts").mkdir(exist_ok=True)
-    
+    (target_dir / ".opencode" / "command").mkdir(parents=True, exist_ok=True)
+
     # Determine AI-specific folder
     ai_assistant = config.get("ai_assistant", "copilot")
     if ai_assistant == "copilot":
@@ -54,33 +56,41 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
     # Claude uses CLAUDE.md in root, Gemini uses .gemini/
     # No additional folders needed for Claude
     # Gemini structure TBD
-    
+
     tree.add("[cyan]●[/cyan] Select AI assistant ([green]" + ai_assistant + "[/green])")
     console.print(tree)
-    
+
     # Define replacements
     replacements = build_replacements(config)
-    
+
     # Copy core files
     step = tree.add("[cyan]●[/cyan] Copy template files")
-    files_copied = copy_template_files(root_dir, target_dir, config, replacements, step, console)
+    files_copied = copy_template_files(
+        root_dir, target_dir, config, replacements, step, console
+    )
     console.print(tree)
-    
+
     # Copy AI-specific agents
     step_agents = tree.add("[cyan]●[/cyan] Setup AI agent configurations")
     copy_ai_agents(root_dir, target_dir, config, step_agents)
     console.print(tree)
-    
+
+    # Copy opencode commands
+    step_opencode = tree.add("[cyan]●[/cyan] Setup opencode commands")
+    copy_opencode_commands(root_dir, target_dir, step_opencode)
+    console.print(tree)
+
     # Create editor-specific configuration
+
     step_editor = tree.add("[cyan]●[/cyan] Setup editor configuration")
     create_editor_config(target_dir, config)
     console.print(tree)
-    
+
     # Create .gitignore
     step_git = tree.add("[cyan]●[/cyan] Create .gitignore")
     create_gitignore(target_dir, config)
     console.print(tree)
-    
+
     # Finalize
     tree.add("[cyan]●[/cyan] Finalize (project ready)")
     console.print(tree)
@@ -89,59 +99,63 @@ def scaffold_project(target_dir: Path, config: Dict[str, Any], console: Console)
 def update_project(target_dir: Path, config: Dict[str, Any], console: Console) -> None:
     """
     Update an existing Product Kit project with latest templates and AI configs.
-    
+
     Args:
         target_dir: Existing project directory
         config: Configuration dictionary from prompts
         console: Rich console for output
     """
     tree = Tree("├── [cyan]●[/cyan] Initialize update")
-    
+
     # Get the data directory (either from package or development)
     package_dir = Path(__file__).parent  # /product-kit/cli/src/product_kit
     data_dir = package_dir / "data"
-    
+
     # If data dir doesn't exist (development mode), use root directory
     if not data_dir.exists():
         root_dir = package_dir.parent.parent.parent  # /product-kit
     else:
         root_dir = data_dir
-    
+
     # Verify we have the necessary files
     if not (root_dir / "agents").exists():
         raise FileNotFoundError(
-            f"Cannot find product-kit data. "
-            f"Expected agents/ folder at {root_dir}"
+            f"Cannot find product-kit data. Expected agents/ folder at {root_dir}"
         )
-    
+
     ai_assistant = config.get("ai_assistant", "copilot")
     tree.add("[cyan]●[/cyan] Select AI assistant ([green]" + ai_assistant + "[/green])")
     console.print(tree)
-    
+
     step_templates = tree.add("[cyan]●[/cyan] Update templates")
     update_directory_files(root_dir, target_dir, "templates", step_templates)
     console.print(tree)
-    
+
     step_context = tree.add("[cyan]●[/cyan] Update context")
     update_directory_files(root_dir, target_dir, "context", step_context)
     console.print(tree)
-    
+
     step_inventory = tree.add("[cyan]●[/cyan] Update inventory")
     update_directory_files(root_dir, target_dir, "inventory", step_inventory)
     console.print(tree)
-    
+
     step_agents = tree.add("[cyan]●[/cyan] Update AI agent configurations")
     copy_ai_agents(root_dir, target_dir, config, step_agents)
     console.print(tree)
-    
+
     step_instructions = tree.add("[cyan]●[/cyan] Update AI instruction files")
     update_ai_instructions(root_dir, target_dir, ai_assistant, step_instructions)
     console.print(tree)
-    
+
+    step_opencode = tree.add("[cyan]●[/cyan] Update opencode commands")
+    update_directory_files(root_dir, target_dir, ".opencode/command", step_opencode)
+    console.print(tree)
+
     step_editor = tree.add("[cyan]●[/cyan] Update editor configuration")
+
     create_editor_config(target_dir, config)
     console.print(tree)
-    
+
     tree.add("[cyan]●[/cyan] Finalize (update complete)")
     console.print(tree)
 
@@ -151,10 +165,10 @@ def build_replacements(config: Dict[str, Any]) -> Dict[str, str]:
     # Extract persona name parts
     persona_parts = config["primary_persona"].split()
     representative_name = persona_parts[-1] if persona_parts else "Alex"
-    
+
     # Build pillars
     pillars = config.get("strategic_pillars", [])
-    
+
     return {
         "[PRODUCT_NAME]": config["product_name"],
         "[EXECUTIVE_SUMMARY]": config["product_vision"],
@@ -162,9 +176,15 @@ def build_replacements(config: Dict[str, Any]) -> Dict[str, str]:
         "[PERSONA_1_NAME]": config["primary_persona"],
         "[REPRESENTATIVE_NAME]": representative_name,
         "[GOAL_1]": f'"{config["persona_goal"]}"',
-        "[STRATEGIC_PILLAR_1]": pillars[0] if len(pillars) > 0 else "Growth & Acquisition",
-        "[STRATEGIC_PILLAR_2]": pillars[1] if len(pillars) > 1 else "Product Excellence",
-        "[STRATEGIC_PILLAR_3]": pillars[2] if len(pillars) > 2 else "Operational Efficiency",
+        "[STRATEGIC_PILLAR_1]": pillars[0]
+        if len(pillars) > 0
+        else "Growth & Acquisition",
+        "[STRATEGIC_PILLAR_2]": pillars[1]
+        if len(pillars) > 1
+        else "Product Excellence",
+        "[STRATEGIC_PILLAR_3]": pillars[2]
+        if len(pillars) > 2
+        else "Operational Efficiency",
     }
 
 
@@ -177,7 +197,7 @@ def render_template_file(
 ) -> None:
     """
     Render a template file with replacements.
-    
+
     Args:
         src_file: Source template file
         dest_file: Destination file
@@ -186,28 +206,28 @@ def render_template_file(
         console: Rich console for output
     """
     content = src_file.read_text(encoding="utf-8")
-    
+
     # Apply replacements
     for placeholder, value in replacements.items():
         content = content.replace(placeholder, value)
-    
+
     # Remove example sections if not wanted
     if not include_examples:
         # Remove HTML comment blocks with examples
         content = re.sub(r"<!-- Example:.*?-->", "", content, flags=re.DOTALL)
         # Clean up excessive newlines
         content = re.sub(r"\n{3,}", "\n\n", content)
-    
+
     # Write to destination
     dest_file.parent.mkdir(parents=True, exist_ok=True)
     dest_file.write_text(content, encoding="utf-8")
-    
+
     console.print(f"  [gray]✓ {dest_file.relative_to(dest_file.parent.parent)}[/gray]")
 
 
 def copy_template_files(
-    root_dir: Path, 
-    target_dir: Path, 
+    root_dir: Path,
+    target_dir: Path,
     config: Dict[str, Any],
     replacements: Dict[str, str],
     tree_node: Tree,
@@ -230,37 +250,41 @@ def copy_template_files(
         ("templates/epic_template.md", "templates/epic_template.md"),
         ("templates/timeline_template.md", "templates/timeline_template.md"),
     ]
-    
+
     ai_assistant = config.get("ai_assistant", "copilot")
     if ai_assistant == "copilot":
-        files_to_copy.append((".ai-providers/copilot-instructions.md", ".github/copilot-instructions.md"))
+        files_to_copy.append(
+            (".ai-providers/copilot-instructions.md", ".github/copilot-instructions.md")
+        )
     elif ai_assistant == "claude":
         files_to_copy.append((".ai-providers/CLAUDE.md", "CLAUDE.md"))
     elif ai_assistant == "gemini":
         files_to_copy.append((".ai-providers/GEMINI.md", "GEMINI.md"))
-    
+
     count = 0
     for src_path, dest_path in files_to_copy:
         src_file = root_dir / src_path
         dest_file = target_dir / dest_path
-        
+
         if src_file.exists():
             content = src_file.read_text(encoding="utf-8")
-            
+
             # Apply replacements
             for placeholder, value in replacements.items():
                 content = content.replace(placeholder, value)
-            
+
             # Remove examples if not wanted
             if not config.get("include_examples", True):
                 content = re.sub(r"<!-- Example:.*?-->", "", content, flags=re.DOTALL)
                 content = re.sub(r"\n{3,}", "\n\n", content)
-            
+
             dest_file.parent.mkdir(parents=True, exist_ok=True)
             dest_file.write_text(content, encoding="utf-8")
             count += 1
-    
-    tree_node.label = f"[cyan]●[/cyan] Copy template files ([green]{count} files[/green])"
+
+    tree_node.label = (
+        f"[cyan]●[/cyan] Copy template files ([green]{count} files[/green])"
+    )
     return count
 
 
@@ -273,11 +297,11 @@ def update_directory_files(
     """Update files in a directory, prompting before adding or replacing."""
     src_dir = root_dir / subdir
     dest_dir = target_dir / subdir
-    
+
     if not src_dir.exists():
         tree_node.label = f"[cyan]●[/cyan] Update {subdir} ([green]0 files[/green])"
         return 0
-    
+
     dest_dir.mkdir(parents=True, exist_ok=True)
     count = 0
     for src_file in src_dir.glob("*.md"):
@@ -287,20 +311,20 @@ def update_directory_files(
                 shutil.copy2(src_file, dest_file)
                 count += 1
             continue
-        
+
         src_content = src_file.read_text(encoding="utf-8")
         dest_content = dest_file.read_text(encoding="utf-8")
         if src_content == dest_content:
             continue
-        
-        if Confirm.ask(f"Update {subdir}/{src_file.name} with latest template?", default=True):
+
+        if Confirm.ask(
+            f"Update {subdir}/{src_file.name} with latest template?", default=True
+        ):
             shutil.copy2(src_file, dest_file)
             count += 1
-    
+
     tree_node.label = f"[cyan]●[/cyan] Update {subdir} ([green]{count} files[/green])"
     return count
-
-
 
 
 def update_ai_instructions(
@@ -321,15 +345,19 @@ def update_ai_instructions(
         src_file = root_dir / ".ai-providers" / "GEMINI.md"
         dest_file = target_dir / "GEMINI.md"
     else:
-        tree_node.label = "[cyan]●[/cyan] Update AI instruction files ([green]0 files[/green])"
+        tree_node.label = (
+            "[cyan]●[/cyan] Update AI instruction files ([green]0 files[/green])"
+        )
         return 0
-    
+
     if src_file.exists():
         dest_file.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src_file, dest_file)
         count = 1
-    
-    tree_node.label = f"[cyan]●[/cyan] Update AI instruction files ([green]{count} files[/green])"
+
+    tree_node.label = (
+        f"[cyan]●[/cyan] Update AI instruction files ([green]{count} files[/green])"
+    )
     return count
 
 
@@ -341,16 +369,16 @@ def copy_ai_agents(
 ) -> None:
     """Copy AI-specific agent and prompt files to shared directories."""
     ai_assistant = config.get("ai_assistant", "copilot")
-    
+
     agents_src = root_dir / "agents"
     prompts_src = root_dir / "prompts"
-    
+
     # All providers get agents/ and prompts/ in root
     agents_dest = target_dir / "agents"
     prompts_dest = target_dir / "prompts"
-    
+
     count = 0
-    
+
     # Copy agent files to root
     if agents_src.exists():
         agents_dest.mkdir(parents=True, exist_ok=True)
@@ -358,7 +386,7 @@ def copy_ai_agents(
             dest_file = agents_dest / agent_file.name
             shutil.copy2(agent_file, dest_file)
             count += 1
-    
+
     # Copy prompt files to root
     if prompts_src.exists():
         prompts_dest.mkdir(parents=True, exist_ok=True)
@@ -366,12 +394,12 @@ def copy_ai_agents(
             dest_file = prompts_dest / prompt_file.name
             shutil.copy2(prompt_file, dest_file)
             count += 1
-    
+
     # GitHub Copilot also needs agents/ and prompts/ in .github for slash commands
     if ai_assistant == "copilot":
         github_dir = target_dir / ".github"
         github_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Copy entire agents folder to .github/agents/
         if agents_src.exists():
             github_agents = github_dir / "agents"
@@ -380,7 +408,7 @@ def copy_ai_agents(
                 dest_file = github_agents / agent_file.name
                 shutil.copy2(agent_file, dest_file)
                 count += 1
-        
+
         # Copy entire prompts folder to .github/prompts/
         if prompts_src.exists():
             github_prompts = github_dir / "prompts"
@@ -391,20 +419,40 @@ def copy_ai_agents(
                 count += 1
     elif ai_assistant == "codex":
         count += copy_codex_prompts_and_skills(agents_src, target_dir)
-    
-    tree_node.label = f"[cyan]●[/cyan] Setup AI agent configurations ([green]{count} files[/green])"
+
+    tree_node.label = (
+        f"[cyan]●[/cyan] Setup AI agent configurations ([green]{count} files[/green])"
+    )
+
+
+def copy_opencode_commands(root_dir: Path, target_dir: Path, tree_node: Tree) -> int:
+    """Copy opencode command files into the project."""
+    src_dir = root_dir / ".opencode" / "command"
+    dest_dir = target_dir / ".opencode" / "command"
+    count = 0
+
+    if src_dir.exists():
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        for command_file in src_dir.glob("*.md"):
+            shutil.copy2(command_file, dest_dir / command_file.name)
+            count += 1
+
+    tree_node.label = (
+        f"[cyan]●[/cyan] Setup opencode commands ([green]{count} files[/green])"
+    )
+    return count
 
 
 def create_editor_config(target_dir: Path, config: Dict[str, Any]) -> None:
     """Create editor-specific configuration files."""
     ai_assistant = config.get("ai_assistant", "copilot")
     editor = config.get("editor", "vscode")
-    
+
     # Create .vscode/settings.json for VS Code + GitHub Copilot
     if ai_assistant == "copilot" and editor in ["vscode", "vscode-web"]:
         vscode_dir = target_dir / ".vscode"
         vscode_dir.mkdir(exist_ok=True)
-        
+
         settings = {
             "chat.promptFilesRecommendations": {
                 "productkit.clarify": True,
@@ -414,11 +462,12 @@ def create_editor_config(target_dir: Path, config: Dict[str, Any]) -> None:
                 "productkit.timeline": True,
                 "productkit.constitution": True,
                 "productkit.update-context": True,
-                "productkit.update-inventory": True
+                "productkit.update-inventory": True,
             }
         }
-        
+
         import json
+
         settings_file = vscode_dir / "settings.json"
         settings_file.write_text(json.dumps(settings, indent=4))
 
@@ -427,26 +476,26 @@ def copy_codex_prompts_and_skills(agents_src: Path, target_dir: Path) -> int:
     """Create Codex prompts and skills from agent files."""
     if not agents_src.exists():
         return 0
-    
+
     codex_dir = target_dir / ".codex"
     prompts_dest = codex_dir / "prompts"
     skills_dest = codex_dir / "skills"
     prompts_dest.mkdir(parents=True, exist_ok=True)
     skills_dest.mkdir(parents=True, exist_ok=True)
-    
+
     count = 0
     for agent_file in agents_src.glob("*.agent.md"):
         prompt_name = agent_file.name.replace(".agent.md", "")
         prompt_dest = prompts_dest / f"{prompt_name}.md"
         prompt_dest.write_text(agent_file.read_text(encoding="utf-8"), encoding="utf-8")
         count += 1
-        
+
         skill_dir = skills_dest / prompt_name
         skill_dir.mkdir(parents=True, exist_ok=True)
         skill_file = skill_dir / "SKILL.md"
         skill_file.write_text(build_codex_skill_content(prompt_name), encoding="utf-8")
         count += 1
-    
+
     return count
 
 

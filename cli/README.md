@@ -17,8 +17,12 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Install product-kit
 uv tool install product-kit
 
+# Verify installation
+prod --version
+
 # Use it
 prod my-project
+
 ```
 
 ### Alternative: Using pipx
@@ -41,17 +45,22 @@ prod my-project
 
 ```bash
 prod my-project
+
+# Check installed version
+prod --version
 ```
 
 You'll be prompted for:
+
 - Product name
 - Product vision (one sentence)
 - North Star metric
 - Primary persona name
 - Persona goal
 - Strategic pillars (comma-separated)
-- Whether to include GitHub Copilot agents
+- AI assistant choice (Copilot, Claude, Gemini, Codex, opencode)
 - Whether to include example content
+
 
 ### Non-Interactive Mode
 
@@ -90,7 +99,10 @@ my-product/
 ├── .github/
 │   ├── copilot-instructions.md
 │   └── agents/                  # Copilot agent configurations
+├── .opencode/
+│   └── command/                 # opencode command definitions
 ├── .gitignore
+
 ├── README.md
 ├── QUICKSTART.md
 ├── ARCHITECTURE.md
@@ -121,15 +133,17 @@ After creating your project:
    - Fill out `context/` files with product details
    - Document current state in `inventory/`
 
-5. **Start using with Copilot:**
+5. **Start using with your assistant:**
    ```bash
    /productkit.clarify "your feature idea"
    ```
 
+
 ## Requirements
 
 - Python 3.8 or higher
-- GitHub Copilot (for AI features)
+- Compatible AI assistant (Copilot, opencode, etc.)
+
 
 ## Development
 
