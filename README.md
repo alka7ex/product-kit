@@ -33,6 +33,17 @@ You'll be guided through an interactive setup to configure:
 - Strategic pillars and personas
 - Template preferences
 
+### Supported Assistants
+
+| Assistant | Interfaces | Config Location |
+| --- | --- | --- |
+| GitHub Copilot | VS Code | `.github/agents/`, `.github/copilot-instructions.md` |
+| Claude | Claude.ai, Claude Desktop, Claude Code | `CLAUDE.md` |
+| Gemini | AI Studio, CLI, IDE Extension | `GEMINI.md` |
+| Codex | CLI, VS Code | `.codex/skills/`, `.codex/prompts/` |
+| opencode | CLI | `.opencode/command/` |
+
+
 ### Alternative Installation Methods
 
 **Using pipx:**
